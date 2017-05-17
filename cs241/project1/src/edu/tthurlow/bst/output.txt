@@ -1,0 +1,35 @@
+Please enter the initial sequence of values: 
+51 29 68 90 36 40 22 59 44 99 77 60 27 83 15 75 3
+
+Pre-order: 51 29 22 15 3 27 36 40 44 68 59 60 90 77 75 83 99 
+In-order: 3 15 22 27 29 36 40 44 51 59 60 68 75 77 83 90 99 
+Post-order: 3 15 27 22 44 40 36 29 60 59 75 83 77 99 90 68 51 
+
+Command: h
+   i <val> - insert a value
+   d <val> - delete a value
+   p <val> - find predecessor
+   s <val> - find successor
+         e - exit the program
+    h or ? - display this message
+Command: i 88
+   Result: 3 15 22 27 29 36 40 44 51 59 60 68 75 77 83 88 90 99 
+Command: i 42
+   Result: 3 15 22 27 29 36 40 42 44 51 59 60 68 75 77 83 88 90 99 
+Command: i 22
+   22 already exists, ignoring.
+Command: d 44
+   Result: 3 15 22 27 29 36 40 42 51 59 60 68 75 77 83 88 90 99 
+Command: d 90
+   Result: 3 15 22 27 29 36 40 42 51 59 60 68 75 77 83 88 99 
+Command: d 70
+   70 not found in BST, ignoring.
+Command: d 68
+   Result: 3 15 22 27 29 36 40 42 51 59 60 75 77 83 88 99 
+Command: s 75
+   Successor: 77
+Command: p 99
+   Predecessor: 88
+Command: e
+
+Process finished with exit code 0

@@ -1,0 +1,32 @@
+$> java Main
+Please select a mode:
+1) 20 sets of 100 randomly generated integers
+2) Fixed integer values 1 to 100
+Enter choice: 1
+
+ ===== 
+
+Average number of smart (fewer reheaps) swaps: 69
+Average number of dumb (series of insertions) swaps: 112
+
+
+
+$> java Main
+Please select a mode:
+1) 20 sets of 100 randomly generated integers
+2) Fixed integer values 1 to 100
+Enter choice: 2
+
+ ===== 
+
+Number of smart (fewer reheaps) swaps: 96
+
+First 10 entries: 100 95 99 79 94 98 63 71 78 87 
+After 10 removals: 90 89 63 79 88 55 62 71 78 87 
+
+ ===== 
+
+Number of dumb (series of insertions) swaps: 480
+
+First 10 entries: 100 94 99 77 93 98 61 68 76 84 
+After 10 removals: 90 89 62 77 88 53 61 68 76 84

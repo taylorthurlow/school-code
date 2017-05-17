@@ -1,0 +1,22 @@
+T. Thurlow's Quadratic Equation
+
+Please enter values for a, b, and c: 1 5 6
+1 x^2 + 5 x + 6 = 0
+x1 = -2
+x2 = -3
+
+
+T. Thurlow's Quadratic Equation
+
+Please enter values for a, b, and c: 34.3 55.0 13
+34.3 x^2 + 55 x + 13 = 0
+x1 = -0.288141
+x2 = -1.31536
+
+
+T. Thurlow's Quadratic Equation
+
+Please enter values for a, b, and c: -12 34 3.4
+-12 x^2 + 34 x + 3.4 = 0
+x1 = -0.0966997
+x2 = 2.93003

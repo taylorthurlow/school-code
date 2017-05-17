@@ -1,0 +1,441 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"setL",
+				"setLedColor"
+			],
+			[
+				"switc",
+				"switcher"
+			],
+			[
+				"curre",
+				"currentLevel"
+			],
+			[
+				"curr",
+				"currentColor"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "#include <iostream>\n\nusing namespace std;\n\nint main(int argc, char *argv[]) {\n\tcout << \"hello world\" << endl;\n\treturn 0;\n}",
+			"file": "test.cpp",
+			"file_size": 122,
+			"file_write_time": 131195801600000000,
+			"settings":
+			{
+				"buffer_size": 122,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "body {\n    background-color: #323335;\n}\n\nbody a:hover {\n    color: #A65041;\n}\n\n#header {\n    height: 145px;\n    background-color: #323335;\n    border-bottom: none;\n}\n\n.pagename a {\n    background: url(%%logo%%) no-repeat;\n    background-position: center;\n    display: inline-block;\n    height: 95px;\n    width: 101px;\n    margin-bottom: 3px;\n    margin-left: 30px;\n    text-indent: -999em;\n    vertical-align: bottom;\n}\n\n#header-bottom-right {\n    background-color: #323335;\n}\n\n#header-bottom-right a {\n    color: #358eb0;\n}\n\n#userbarToggle {\n    display: none !important;\n}\n\n.tabmenu:not(.formtab) {\n    position: absolute;\n    bottom: 12px;\n    left: 15px;\n    background-color: #323335;\n    padding: 5px;\n}\n\n.tabmenu li {\n    background-color: transparent;\n}\n\n.tabmenu li a {\n    background-color: transparent;\n    color: #E2E2CD;\n    font-family: verdana, arial, helvetica, sans-serif;\n    font-size: 12px;\n    text-transform: uppercase;\n}\n\n.tabmenu li.selected a {\n    background-color: transparent;\n    color: #A65041;\n    border: none;\n}\n\n.side, .side a, .roundfield, .info-notice, .titlebox form.toggle, .leavemoderator {\n    background-color: #323335;\n}\n\n.side a, .side p, .number, .word, .users-online {\n    color: #358EB0;\n}\n\n.comment .md {\n    color: #E2E2CD;\n}\n\n.score {\n    color: #E2E2CD !important;\n}\n\n.bottom .author {\n    font-size: 0;\n}\n\n.bottom .author::after {\n    content: \"kaed_ and Frizkie\";\n    font-size: 10px;\n}\n\ndiv.content #siteTable div.link div.entry p.title a.title,\n    .side p .side li {\n    color: #E2E2CD;\n}\n\na.title:visited {\n    color: #E2E2CD !important;\n}\n\ndiv.side {\n    margin-right: 15px;\n    padding: 5px;\n}\n\ndiv.side a:hover {\n    color: #A65041;\n}\n\n.tagline, .tagline a, .flat-list.buttons li a {\n    color: #ADADA0;\n}\n\n.create {\n    display: none;\n}\n\n.link {\n    overflow: hidden;\n    margin-bottom: 10px;\n    padding: 10px;\n}\n\n.morelink {\n    border: none;\n    background-image: none;\n}\n\n.morelink a {   \n    background-color: #E2E2CD;\n    color: #323335;\n}\n\n/*Add Image to Sidebar*/\ndiv.side div.spacer:nth-of-type(1) {\n    padding-top: 300px; /*Change \"300px\" to the height to the height of your image*/\n    background:url(%%epoch%%) top center no-repeat;\n}\n\n/*Optional- adds a caption under that image*/\ndiv.side div.spacer:nth-of-type(1):before {\n    display:block;\n    margin-top: 10px;\n    width: 300px;\n    content: \"New LP, 'Epoch', released Sept 29th, 2016\";\n    padding: 0 0 10px;\n    color: #E2E2CD;\n    text-align: center; /*delete this line if you no longer want the text centered*/\n    font-size: small; /*Change the font-size to your liking*/\n} \n\n.res .RES-keyNav-activeElement,\n.res .commentarea .RES-keyNav-activeElement .md,\n.res .commentarea .RES-keyNav-activeElement.entry .noncollapsed {\n    background: rgba(0, 0, 0, 0.0) !important;\n}\n\n.nub {\n    display: none;\n}\n\n/* The man himself */\n\n.author[href$=\"/user/Tychomusic\"]:after{content: \"   (Scott Hansen)\"; color: #A65041; }\n\n/* RES LIKES TO CHANGE COLORS */\n.res .RES-keyNav-activeElement,\n.res .commentarea .RES-keyNav-activeElement .md,\n.res .commentarea .RES-keyNav-activeElement.entry .noncollapsed {\n    background: #555 !important;\n}\n\n.res-commentBoxes .comment,\n.res-commentBoxes .comment .comment,\n.res-commentBoxes .comment .comment .comment,\n.res-commentBoxes .comment .comment .comment .comment,\n.res-commentBoxes .comment .comment .comment .comment .comment,\n.res-commentBoxes .comment .comment .comment .comment .comment .comment,\n.res-commentBoxes .comment .comment .comment .comment .comment .comment .comment {\n    margin-left: 0 !important;\n    padding-bottom: 0;\n    margin-bottom: 4px !important;\n    border: none !important;\n}\n\n.new-comment .usertext-body {\n    background-color: #323335 !important;\n    border: none !important;\n}\n\n.res:not(.res-nightmode) .commentarea .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment .comment .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment .comment .comment .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment .comment .comment .comment .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment .comment .comment .comment .comment .comment .comment .comment,\n.res:not(.res-nightmode) .commentarea .comment .comment .comment .comment .comment .comment .comment .comment .comment .comment .comment .comment {\n    background: transparent !important;\n}",
+			"file": "/Users/taylorthurlow/Dropbox/css/tycho/tycho.css",
+			"file_size": 5076,
+			"file_write_time": 131197514170000000,
+			"settings":
+			{
+				"buffer_size": 4987,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/C++/C++ Single File.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/JavaC.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 368.0,
+		"last_filter": "package control",
+		"selected_items":
+		[
+			[
+				"package control",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"pack inst",
+				"Package Control: Install Package"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add All"
+			],
+			[
+				"package control list",
+				"Package Control: List Unmanaged Packages"
+			],
+			[
+				"git diff",
+				"Git: Diff All Files"
+			],
+			[
+				"package list",
+				"Package Control: List Packages"
+			],
+			[
+				"folder",
+				"Project: Add Folder"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"prv",
+				"PackageResourceViewer: Extract Package"
+			],
+			[
+				"align",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"project",
+				"Project: Save As"
+			]
+		],
+		"width": 536.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/taylorthurlow/Dropbox/java/minecraft/Killer Snowballs/src/me/frizkie/killersnowballs/KillerSnowballsEntityListener.java",
+		"/Users/taylorthurlow/Dropbox/java/minecraft/Killer Snowballs/src/me/frizkie/killersnowballs/KillerSnowballs.java",
+		"/Users/taylorthurlow/Dropbox/java/minecraft/Killer Snowballs/src/me/frizkie/killersnowballs/KillerSnowballsPlayerListener.java",
+		"/Users/taylorthurlow/Dropbox/java/minecraft/Killer Snowballs/src/me/frizkie/killersnowballs/KillerSnowballTeam.java",
+		"/Users/taylorthurlow/Dropbox/c#/topDown/SimplePlatformController.cs",
+		"/Users/taylorthurlow/Library/Application Support/Sublime Text 3/Packages/User/JSON.sublime-settings",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/Map.java",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/Game.java",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/Thing.java",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/Player.java",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/Tile.java",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/maps/export-things.csv",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/maps/export.csv",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/maps/objects.csv",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/ImageLoader.java",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/UnitPosition.java",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/tthurlow/topdown/SpriteSheet.java",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/edu/srjc/csclub/topdown/Player.java",
+		"/Users/taylorthurlow/Library/Application Support/Sublime Text 3/Packages/Javatar/README.md",
+		"/Users/taylorthurlow/Dropbox/java/topDown/topDown/src/edu/srjc/csclub/topdown/Game.java",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/ledcube.ino",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/functions.cpp",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/fountain.h",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/fountain.cpp",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/functions.h",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/larsonScanner.cpp",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/glowingPlatform.cpp",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/LEDColor.h",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/led.h",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/led.cpp",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/coords.cpp",
+		"/Users/taylorthurlow/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/taylorthurlow/Library/Application Support/Sublime Text 3/Packages/Alignment/Default (OSX).sublime-keymap",
+		"/Users/taylorthurlow/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube.sublime-project",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/larsonScanner.h",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/ledcube/ledcube/glowingPlatform.h",
+		"/Users/taylorthurlow/Dropbox/Code/arduino/cs club 4x4 led cube/4x4x4-LED-Cube/library/library.ino",
+		"/Users/taylorthurlow/Downloads/configuration.txt",
+		"/Users/taylorthurlow/Dropbox/car/car.txt",
+		"/Users/taylorthurlow/Dropbox/superuser post.txt",
+		"/Users/taylorthurlow/Desktop/whatcd.txt",
+		"/Users/taylorthurlow/Desktop/uploads.txt",
+		"/Users/taylorthurlow/Desktop/wcd-not-music.txt",
+		"/Users/taylorthurlow/Desktop/untitled folder/nhlstreams.py"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"selection",
+			"<open folders>",
+			"<current file>",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Tiles",
+			"/**\n\t\t\t * Things\n\t\t\t */\n\t\t\t\n\t\t\tString thingPath = URLDecoder.decode(getClass().getResource(\"maps/\" + fileName + \"-things\" + \".csv\").getPath());\n\t\t\tFile thingFile = new File(thingPath);\n\t\t\tSystem.out.println(\"Tiles: \" + tileFile.getPath());\n\n\t\t\tScanner tileScanner;\n\t\t\tString tileString = \"\";\n\t\t\ttry {\n\t\t\t\ttileScanner = new Scanner(tileFile);\n\t\t\t\ttileString = tileScanner.nextLine();\n\t\t\t\twhile (tileScanner.hasNextLine()) {\n\t\t\t\t\ttileString = tileString + \"|\" + tileScanner.nextLine();\n\t\t\t\t}\n\t\t\t\ttileString = tileString.replace(\",\", \"\");\n\t\t\t} catch (FileNotFoundException e) {\n\t\t\t\te.printStackTrace();\n\t\t\t}\n\t\t\t\n\t\t\tchar[] serializedTileMap = tileString.toCharArray();\n\t\t\tArrayList<Character> delimitersRemoved = new ArrayList<>();\n\n\t\t\tfor (int i = 0; i < serializedTileMap.length; i++) {\n\t\t\t\tif (serializedTileMap[i] == '|') {\n\t\t\t\t\tif (this.width == 0) {\n\t\t\t\t\t\tthis.width = i;\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tdelimitersRemoved.add(serializedTileMap[i]);\n\t\t\t\t}\n\t\t\t}\n\t\t\t\n\t\t\tint length = delimitersRemoved.toArray().length;\n\t\t\theight = length / width;\n\t\t\t\n\t\t\tmapTiles = new Tile[height - 1][width - 1];\n\t\t\tTile[] tileArray = new Tile[(width * height)];\n\t\t\tfor (int i = 0; i < tileArray.length; i++) {\n\t\t\t\tint got = Character.getNumericValue((char) delimitersRemoved.toArray()[i]);\n\t\t\t\ttileArray[i] = Tile.getTileById(got);\n\t\t\t}\n\t\t\tmapTiles = monoToBidi(tileArray, height, width);",
+			"tent",
+			"next",
+			"inter",
+			"interp",
+			"edu.srjc.csclub.topdown",
+			"currentIntensity",
+			"maps:",
+			"ln",
+			"taylorjthurlow",
+			"\\t",
+			"./",
+			".rtorrent",
+			"./",
+			":\\",
+			"~/music/Arctic Monkeys/Humbug\\",
+			"D:\\music\\Arctic Monkeys\\",
+			"ha"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"/**\n\t\t\t * Things\n\t\t\t */\n\t\t\t\n\t\t\tString thingPath = URLDecoder.decode(getClass().getResource(\"maps/\" + fileName + \"-things\" + \".csv\").getPath());\n\t\t\tFile thingFile = new File(thingPath);\n\t\t\tSystem.out.println(\"Tiles: \" + tileFile.getPath());\n\n\t\t\tScanner tileScanner;\n\t\t\tString tileString = \"\";\n\t\t\ttry {\n\t\t\t\ttileScanner = new Scanner(tileFile);\n\t\t\t\ttileString = tileScanner.nextLine();\n\t\t\t\twhile (tileScanner.hasNextLine()) {\n\t\t\t\t\ttileString = tileString + \"|\" + tileScanner.nextLine();\n\t\t\t\t}\n\t\t\t\ttileString = tileString.replace(\",\", \"\");\n\t\t\t} catch (FileNotFoundException e) {\n\t\t\t\te.printStackTrace();\n\t\t\t}\n\t\t\t\n\t\t\tchar[] serializedTileMap = tileString.toCharArray();\n\t\t\tArrayList<Character> delimitersRemoved = new ArrayList<>();\n\n\t\t\tfor (int i = 0; i < serializedTileMap.length; i++) {\n\t\t\t\tif (serializedTileMap[i] == '|') {\n\t\t\t\t\tif (this.width == 0) {\n\t\t\t\t\t\tthis.width = i;\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tdelimitersRemoved.add(serializedTileMap[i]);\n\t\t\t\t}\n\t\t\t}\n\t\t\t\n\t\t\tint length = delimitersRemoved.toArray().length;\n\t\t\theight = length / width;\n\t\t\t\n\t\t\tmapTiles = new Tile[height - 1][width - 1];\n\t\t\tTile[] tileArray = new Tile[(width * height)];\n\t\t\tfor (int i = 0; i < tileArray.length; i++) {\n\t\t\t\tint got = Character.getNumericValue((char) delimitersRemoved.toArray()[i]);\n\t\t\t\ttileArray[i] = Tile.getTileById(got);\n\t\t\t}\n\t\t\tmapTiles = monoToBidi(tileArray, height, width);",
+			"tthurlow.topdown",
+			"getIntensity()",
+			"mywebsite",
+			"    ",
+			"",
+			"~/music/Arctic Monkeys/Humbug/",
+			"~/music/Arctic Monkeys/"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "test.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								122,
+								122
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/taylorthurlow/Dropbox/css/tycho/tycho.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4987,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								4987
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2455.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 219.0
+	},
+	"output.find_results":
+	{
+		"height": 110.0
+	},
+	"output.git":
+	{
+		"height": 110.0
+	},
+	"output.variable_get":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "test.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 219.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
