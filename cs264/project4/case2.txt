@@ -1,0 +1,483 @@
+PC       = 4194800
+EPC      = 0
+Cause    = 0
+BadVAddr = 0
+Status   = 805371664
+
+HI       = 0
+LO       = 7
+
+R0  [r0] = 0
+R1  [at] = 268500992
+R2  [v0] = 10
+R3  [v1] = 0
+R4  [a0] = 268501192
+R5  [a1] = 2147481340
+R6  [a2] = 7
+R7  [a3] = 7
+R8  [t0] = 1
+R9  [t1] = 2147481368
+R10 [t2] = 239493
+R11 [t3] = 2147481340
+R12 [t4] = 74
+R13 [t5] = 9
+R14 [t6] = 0
+R15 [t7] = 0
+R16 [s0] = 8
+R17 [s1] = 8
+R18 [s2] = 2147481340
+R19 [s3] = 9
+R20 [s4] = 239493
+R21 [s5] = 0
+R22 [s6] = 0
+R23 [s7] = 0
+R24 [t8] = 0
+R25 [t9] = 0
+R26 [k0] = 0
+R27 [k1] = 0
+R28 [gp] = 268468224
+R29 [sp] = 2147481340
+R30 [s8] = 2147481372
+R31 [ra] = 4194728
+
+
+User Text Segment [00400000]..[00440000]
+[00400000] 8fa40000  lw $4, 0($29)            ; 183: lw $a0 0($sp) # argc 
+[00400004] 27a50004  addiu $5, $29, 4         ; 184: addiu $a1 $sp 4 # argv 
+[00400008] 24a60004  addiu $6, $5, 4          ; 185: addiu $a2 $a1 4 # envp 
+[0040000c] 00041080  sll $2, $4, 2            ; 186: sll $v0 $a0 2 
+[00400010] 00c23021  addu $6, $6, $2          ; 187: addu $a2 $a2 $v0 
+[00400014] 0c100009  jal 0x00400024 [main]    ; 188: jal main 
+[00400018] 00000000  nop                      ; 189: nop 
+[0040001c] 3402000a  ori $2, $0, 10           ; 191: li $v0 10 
+[00400020] 0000000c  syscall                  ; 192: syscall # syscall 10 (exit) 
+[00400024] 34110000  ori $17, $0, 0           ; 24: li $s1, 0 # start for loop iterator at 0 
+[00400028] 001df021  addu $30, $0, $29        ; 25: move $fp, $sp # set frame pointer for later 
+[0040002c] 34020004  ori $2, $0, 4            ; 28: li $v0, 4 # syscall 4 is print string 
+[00400030] 3c041001  lui $4, 4097 [prompt_quantity]; 29: la $a0, prompt_quantity # load address of prompt string 
+[00400034] 0000000c  syscall                  ; 30: syscall # call print on string address 
+[00400038] 34020005  ori $2, $0, 5            ; 32: li $v0, 5 # syscall 5 is read integer 
+[0040003c] 0000000c  syscall                  ; 33: syscall # integer read is now in $v0 
+[00400040] 00028021  addu $16, $0, $2         ; 34: move $s0, $v0 # put integer read into $s0 
+[00400044] 2a010001  slti $1, $16, 1          ; 36: blt $s0, 1, quantity # re-prompt if too small 
+[00400048] 1420fff9  bne $1, $0, -28 [quantity-0x00400048] 
+[0040004c] 2a010065  slti $1, $16, 101        ; 37: bgt $s0, 100, quantity # re-prompt if too large 
+[00400050] 1020fff7  beq $1, $0, -36 [quantity-0x00400050] 
+[00400054] 34020004  ori $2, $0, 4            ; 40: li $v0, 4 # syscall 4 is print string 
+[00400058] 3c011001  lui $1, 4097 [prompt_integer]; 41: la $a0, prompt_integer # load address of prompt string 
+[0040005c] 34240036  ori $4, $1, 54 [prompt_integer] 
+[00400060] 0000000c  syscall                  ; 42: syscall # call print on string address 
+[00400064] 34020005  ori $2, $0, 5            ; 44: li $v0, 5 # syscall 5 is read integer 
+[00400068] 0000000c  syscall                  ; 45: syscall # integer read is now in $v0 
+[0040006c] 00022021  addu $4, $0, $2          ; 46: move $a0, $v0 # put integer read in $a0 
+[00400070] 0c10007d  jal 0x004001f4 [insert_integer]; 47: jal insert_integer # call subroutine to insert integer 
+[00400074] 26310001  addiu $17, $17, 1        ; 49: addiu $s1, $s1, 1 # increment iterator 
+[00400078] 1630fff7  bne $17, $16, -36 [integers-0x00400078]
+[0040007c] 34010001  ori $1, $0, 1            ; 51: beq $s0, 1, print # skip sort if array length 1 
+[00400080] 1030000e  beq $1, $16, 56 [print-0x00400080] 
+[00400084] 00005020  add $10, $0, $0          ; 55: add $t2, $zero, $zero # $t2 is flag for complete sort 
+[00400088] 001e5821  addu $11, $0, $30        ; 56: move $t3, $fp # load frame pointer address into $t3 
+[0040008c] 216bfffc  addi $11, $11, -4        ; 57: addi $t3, $t3, -4 # set $t3 to start of array 
+[00400090] 8d6c0000  lw $12, 0($11)           ; 59: lw $t4, 0($t3) # set $t4 to current array element 
+[00400094] 8d6dfffc  lw $13, -4($11)          ; 60: lw $t5, -4($t3) # set $t5 to next array element 
+[00400098] 018d702a  slt $14, $12, $13        ; 61: slt $t6, $t4, $t5 # set $t6 to 1 if $t4 
+[0040009c] 11c00004  beq $14, $0, 16 [continue-0x0040009c]
+[004000a0] 200a0001  addi $10, $0, 1          ; 63: addi $t2, $zero, 1 # set flag to check again because swap was needed 
+[004000a4] ad6cfffc  sw $12, -4($11)          ; 64: sw $t4, -4($t3) # perform swap 
+[004000a8] ad6d0000  sw $13, 0($11)           ; 65: sw $t5, 0($t3) # perform swap 
+[004000ac] 216bfffc  addi $11, $11, -4        ; 67: addi $t3, $t3, -4 # set new iteration start location 
+[004000b0] 1568fff8  bne $11, $8, -32 [inner_loop-0x004000b0]
+[004000b4] 1540fff4  bne $10, $0, -48 [outer_loop-0x004000b4]
+[004000b8] 34110000  ori $17, $0, 0           ; 72: li $s1, 0 # reset iterator 
+[004000bc] 00029021  addu $18, $0, $2         ; 73: move $s2, $v0 # move start address into $s2 
+[004000c0] 00124021  addu $8, $0, $18         ; 76: move $t0, $s2 # get return value array start address 
+[004000c4] 00114880  sll $9, $17, 2           ; 77: sll $t1, $s1, 2 # calculate offset from iterator 
+[004000c8] 01095021  addu $10, $8, $9         ; 78: addu $t2, $t0, $t1 # add start address and offset to get element address 
+[004000cc] 8d440000  lw $4, 0($10)            ; 79: lw $a0, 0($t2) # load integer value from that address for printing 
+[004000d0] 34020001  ori $2, $0, 1            ; 80: li $v0, 1 # syscall 1 is print integer 
+[004000d4] 0000000c  syscall                  ; 81: syscall 
+[004000d8] 1011000b  beq $0, $17, 44 [flag_start-0x004000d8]
+[004000dc] 0093082a  slt $1, $4, $19          ; 85: blt $a0, $s3, flag_smallest # set integer as smallest if smallest 
+[004000e0] 1420000c  bne $1, $0, 48 [flag_smallest-0x004000e0] 
+[004000e4] 0284082a  slt $1, $20, $4          ; 87: bgt $a0, $s4, flag_largest # set integer as largest if largest 
+[004000e8] 1420000c  bne $1, $0, 48 [flag_largest-0x004000e8] 
+[004000ec] 34040020  ori $4, $0, 32           ; 90: la $a0, ' ' # load space character for list delimiter 
+[004000f0] 3402000b  ori $2, $0, 11           ; 91: li $v0, 11 # syscall 11 is print character 
+[004000f4] 0000000c  syscall                  ; 92: syscall 
+[004000f8] 26310001  addiu $17, $17, 1        ; 94: addiu $s1, $s1, 1 # increment iterator 
+[004000fc] 1630fff1  bne $17, $16, -60 [print_loop-0x004000fc]
+[00400100] 08100048  j 0x00400120 [print_result]; 96: j print_result 
+[00400104] 24930000  addiu $19, $4, 0         ; 99: addiu $s3, $a0, 0 # always set integer as smallest on first iteration 
+[00400108] 24940000  addiu $20, $4, 0         ; 100: addiu $s4, $a0, 0 # always set integer as largest on first iteration 
+[0040010c] 08100037  j 0x004000dc [flagging]  ; 101: j flagging 
+[00400110] 24930000  addiu $19, $4, 0         ; 104: addiu $s3, $a0, 0 # set smallest integer 
+[00400114] 08100039  j 0x004000e4 [continue_after_flag_smallest]
+[00400118] 24940000  addiu $20, $4, 0         ; 108: addiu $s4, $a0, 0 # set largest integer 
+[0040011c] 0810003b  j 0x004000ec [continue_after_flag_largest]
+[00400120] 3404000a  ori $4, $0, 10           ; 112: la $a0, '\n' # load newline character 
+[00400124] 3402000b  ori $2, $0, 11           ; 113: li $v0, 11 # syscall 11 is print character 
+[00400128] 0000000c  syscall                  ; 114: syscall 
+[0040012c] 34020004  ori $2, $0, 4            ; 116: li $v0, 4 # syscall 4 is print string 
+[00400130] 3c011001  lui $1, 4097 [smallest_message]; 117: la $a0, smallest_message # load address of prompt string 
+[00400134] 34240064  ori $4, $1, 100 [smallest_message] 
+[00400138] 0000000c  syscall                  ; 118: syscall 
+[0040013c] 26640000  addiu $4, $19, 0         ; 120: addiu $a0, $s3, 0 # load integer value from that address for printing 
+[00400140] 34020001  ori $2, $0, 1            ; 121: li $v0, 1 # syscall 1 is print integer 
+[00400144] 0000000c  syscall                  ; 122: syscall 
+[00400148] 3404000a  ori $4, $0, 10           ; 124: la $a0, '\n' # load newline character 
+[0040014c] 3402000b  ori $2, $0, 11           ; 125: li $v0, 11 # syscall 11 is print character 
+[00400150] 0000000c  syscall                  ; 126: syscall 
+[00400154] 34020004  ori $2, $0, 4            ; 128: li $v0, 4 # syscall 4 is print string 
+[00400158] 3c011001  lui $1, 4097 [largest_message]; 129: la $a0, largest_message # load address of prompt string 
+[0040015c] 3424008b  ori $4, $1, 139 [largest_message] 
+[00400160] 0000000c  syscall                  ; 130: syscall 
+[00400164] 26840000  addiu $4, $20, 0         ; 132: addiu $a0, $s4, 0 # load integer value from that address for printing 
+[00400168] 34020001  ori $2, $0, 1            ; 133: li $v0, 1 # syscall 1 is print integer 
+[0040016c] 0000000c  syscall                  ; 134: syscall 
+[00400170] 3404000a  ori $4, $0, 10           ; 137: la $a0, '\n' # load newline character 
+[00400174] 3402000b  ori $2, $0, 11           ; 138: li $v0, 11 # syscall 11 is print character 
+[00400178] 0000000c  syscall                  ; 139: syscall 
+[0040017c] 34020004  ori $2, $0, 4            ; 141: li $v0, 4 # syscall 4 is print string 
+[00400180] 3c011001  lui $1, 4097 [prompt_search]; 142: la $a0, prompt_search # load address of prompt string 
+[00400184] 34240049  ori $4, $1, 73 [prompt_search] 
+[00400188] 0000000c  syscall                  ; 143: syscall 
+[0040018c] 34020005  ori $2, $0, 5            ; 145: li $v0, 5 # syscall 5 is read integer 
+[00400190] 0000000c  syscall                  ; 146: syscall # integer read is now in $v0 
+[00400194] 00022021  addu $4, $0, $2          ; 147: move $a0, $v0 
+[00400198] 00122821  addu $5, $0, $18         ; 149: move $a1, $s2 
+[0040019c] 34060000  ori $6, $0, 0            ; 150: li $a2, 0 # low value index = 0 
+[004001a0] 2207ffff  addi $7, $16, -1         ; 151: addi $a3, $s0, -1 # high value index = number of integers input - 1 
+[004001a4] 0c100085  jal 0x00400214 [binary_search]; 153: jal binary_search 
+[004001a8] 00024021  addu $8, $0, $2          ; 155: move $t0, $v0 # store return value for message printing 
+[004001ac] 3404000a  ori $4, $0, 10           ; 157: la $a0, '\n' # load newline character 
+[004001b0] 3402000b  ori $2, $0, 11           ; 158: li $v0, 11 # syscall 11 is print character 
+[004001b4] 0000000c  syscall                  ; 159: syscall 
+[004001b8] 10080009  beq $0, $8, 36 [print_failure-0x004001b8]
+[004001bc] 34010001  ori $1, $0, 1            ; 162: beq $t0, 1, print_success 
+[004001c0] 10280002  beq $1, $8, 8 [print_success-0x004001c0] 
+[004001c4] 08100077  j 0x004001dc [print_failure]; 164: j print_failure 
+[004001c8] 34020004  ori $2, $0, 4            ; 167: li $v0, 4 # syscall 4 is print string 
+[004001cc] 3c011001  lui $1, 4097 [success_message]; 168: la $a0, success_message # load address of prompt string 
+[004001d0] 342400c8  ori $4, $1, 200 [success_message] 
+[004001d4] 0000000c  syscall                  ; 169: syscall 
+[004001d8] 0810007b  j 0x004001ec [exit]      ; 170: j exit 
+[004001dc] 34020004  ori $2, $0, 4            ; 173: li $v0, 4 # syscall 4 is print string 
+[004001e0] 3c011001  lui $1, 4097 [failure_message]; 174: la $a0, failure_message # load address of prompt string 
+[004001e4] 342400f6  ori $4, $1, 246 [failure_message] 
+[004001e8] 0000000c  syscall                  ; 175: syscall 
+[004001ec] 3402000a  ori $2, $0, 10           ; 178: li $v0, 10 
+[004001f0] 0000000c  syscall                  ; 179: syscall 
+[004001f4] 23bdfffc  addi $29, $29, -4        ; 185: addi $sp, $sp, -4 # allocate bytes words of space on the stack 
+[004001f8] afa40000  sw $4, 0($29)            ; 186: sw $a0, 0($sp) # store integer 
+[004001fc] 001e4021  addu $8, $0, $30         ; 188: move $t0, $fp # load frame pointer address into $t0 
+[00400200] 2108fffc  addi $8, $8, -4          ; 189: addi $t0, $t0, -4 # jump to start of array because there seems 
+[00400204] 00114880  sll $9, $17, 2           ; 191: sllv $t1, $s1, 2 # calculate offset based on current loop iteration 
+[00400208] 01094022  sub $8, $8, $9           ; 192: sub $t0, $t0, $t1 # subtract offset to $t0 to get to end of array 
+[0040020c] 00081021  addu $2, $0, $8          ; 193: move $v0, $t0 # load return value: address of first array element 
+[00400210] 03e00008  jr $31                   ; 194: jr $ra # end subroutine, return to caller 
+[00400214] 23bdfffc  addi $29, $29, -4        ; 203: addi $sp, $sp, -4 # room on stack for return address 
+[00400218] afbf0000  sw $31, 0($29)           ; 204: sw $ra, ($sp) 
+[0040021c] 00e6082a  slt $1, $7, $6           ; 206: blt $a3, $a2, not_found 
+[00400220] 14200013  bne $1, $0, 76 [not_found-0x00400220] 
+[00400224] 00c74020  add $8, $6, $7           ; 207: add $t0, $a2, $a3 # compute median index between $a2 and $a3 
+[00400228] 34090002  ori $9, $0, 2            ; 208: li $t1, 2 
+[0040022c] 0109001a  div $8, $9               ; 209: div $t0, $t1 
+[00400230] 00004012  mflo $8                  ; 210: mflo $t0 # store median index in $t0 
+[00400234] 00084880  sll $9, $8, 2            ; 211: sll $t1, $t0, 2 # store offset for median in $t1 
+[00400238] 01254820  add $9, $9, $5           ; 213: add $t1, $t1, $a1 # add offset to address to get median address 
+[0040023c] 8d2a0000  lw $10, 0($9)            ; 214: lw $t2, ($t1) # load median value into $t2 
+[00400240] 11440009  beq $10, $4, 36 [found-0x00400240]
+[00400244] 0144082a  slt $1, $10, $4          ; 217: bgt $a0, $t2, val_greater 
+[00400248] 14200004  bne $1, $0, 16 [val_greater-0x00400248] 
+[0040024c] 2107ffff  addi $7, $8, -1          ; 219: addi $a3, $t0, -1 # start new recursion of binary_search with high = mid - 1 
+[00400250] 0c100085  jal 0x00400214 [binary_search]; 220: jal binary_search 
+[00400254] 0810009d  j 0x00400274 [branch]    ; 221: j branch 
+[00400258] 21060001  addi $6, $8, 1           ; 224: addi $a2, $t0, 1 # start new recursion of binary_search with low = mid + 1 
+[0040025c] 0c100085  jal 0x00400214 [binary_search]; 225: jal binary_search 
+[00400260] 0810009d  j 0x00400274 [branch]    ; 226: j branch 
+[00400264] 34020001  ori $2, $0, 1            ; 229: li $v0, 1 
+[00400268] 0810009d  j 0x00400274 [branch]    ; 230: j branch 
+[0040026c] 34020000  ori $2, $0, 0            ; 233: li $v0, 0 
+[00400270] 0810009d  j 0x00400274 [branch]    ; 234: j branch 
+[00400274] 8fbf0000  lw $31, 0($29)           ; 237: lw $ra, ($sp) # load return address from stack 
+[00400278] 23bd0004  addi $29, $29, 4         ; 238: addi $sp, $sp, 4 # restore stack pointer 
+[0040027c] 03e00008  jr $31                   ; 239: jr $ra 
+
+Kernel Text Segment [80000000]..[80010000]
+[80000180] 0001d821  addu $27, $0, $1         ; 90: move $k1 $at # Save $at 
+[80000184] 3c019000  lui $1, -28672           ; 92: sw $v0 s1 # Not re-entrant and we can't trust $sp 
+[80000188] ac220200  sw $2, 512($1)           
+[8000018c] 3c019000  lui $1, -28672           ; 93: sw $a0 s2 # But we need to use these registers 
+[80000190] ac240204  sw $4, 516($1)           
+[80000194] 401a6800  mfc0 $26, $13            ; 95: mfc0 $k0 $13 # Cause register 
+[80000198] 001a2082  srl $4, $26, 2           ; 96: srl $a0 $k0 2 # Extract ExcCode Field 
+[8000019c] 3084001f  andi $4, $4, 31          ; 97: andi $a0 $a0 0x1f 
+[800001a0] 34020004  ori $2, $0, 4            ; 101: li $v0 4 # syscall 4 (print_str) 
+[800001a4] 3c049000  lui $4, -28672 [__m1_]   ; 102: la $a0 __m1_ 
+[800001a8] 0000000c  syscall                  ; 103: syscall 
+[800001ac] 34020001  ori $2, $0, 1            ; 105: li $v0 1 # syscall 1 (print_int) 
+[800001b0] 001a2082  srl $4, $26, 2           ; 106: srl $a0 $k0 2 # Extract ExcCode Field 
+[800001b4] 3084001f  andi $4, $4, 31          ; 107: andi $a0 $a0 0x1f 
+[800001b8] 0000000c  syscall                  ; 108: syscall 
+[800001bc] 34020004  ori $2, $0, 4            ; 110: li $v0 4 # syscall 4 (print_str) 
+[800001c0] 3344003c  andi $4, $26, 60         ; 111: andi $a0 $k0 0x3c 
+[800001c4] 3c019000  lui $1, -28672           ; 112: lw $a0 __excp($a0) 
+[800001c8] 00240821  addu $1, $1, $4          
+[800001cc] 8c240180  lw $4, 384($1)           
+[800001d0] 00000000  nop                      ; 113: nop 
+[800001d4] 0000000c  syscall                  ; 114: syscall 
+[800001d8] 34010018  ori $1, $0, 24           ; 116: bne $k0 0x18 ok_pc # Bad PC exception requires special checks 
+[800001dc] 143a0008  bne $1, $26, 32 [ok_pc-0x800001dc] 
+[800001e0] 00000000  nop                      ; 117: nop 
+[800001e4] 40047000  mfc0 $4, $14             ; 119: mfc0 $a0 $14 # EPC 
+[800001e8] 30840003  andi $4, $4, 3           ; 120: andi $a0 $a0 0x3 # Is EPC word-aligned? 
+[800001ec] 10040004  beq $0, $4, 16 [ok_pc-0x800001ec]
+[800001f0] 00000000  nop                      ; 122: nop 
+[800001f4] 3402000a  ori $2, $0, 10           ; 124: li $v0 10 # Exit on really bad PC 
+[800001f8] 0000000c  syscall                  ; 125: syscall 
+[800001fc] 34020004  ori $2, $0, 4            ; 128: li $v0 4 # syscall 4 (print_str) 
+[80000200] 3c019000  lui $1, -28672 [__m2_]   ; 129: la $a0 __m2_ 
+[80000204] 3424000d  ori $4, $1, 13 [__m2_]   
+[80000208] 0000000c  syscall                  ; 130: syscall 
+[8000020c] 001a2082  srl $4, $26, 2           ; 132: srl $a0 $k0 2 # Extract ExcCode Field 
+[80000210] 3084001f  andi $4, $4, 31          ; 133: andi $a0 $a0 0x1f 
+[80000214] 14040002  bne $0, $4, 8 [ret-0x80000214]; 134: bne $a0 0 ret # 0 means exception was an interrupt 
+[80000218] 00000000  nop                      ; 135: nop 
+[8000021c] 401a7000  mfc0 $26, $14            ; 145: mfc0 $k0 $14 # Bump EPC register 
+[80000220] 275a0004  addiu $26, $26, 4        ; 146: addiu $k0 $k0 4 # Skip faulting instruction 
+[80000224] 409a7000  mtc0 $26, $14            ; 148: mtc0 $k0 $14 
+[80000228] 3c019000  lui $1, -28672           ; 153: lw $v0 s1 # Restore other registers 
+[8000022c] 8c220200  lw $2, 512($1)           
+[80000230] 3c019000  lui $1, -28672           ; 154: lw $a0 s2 
+[80000234] 8c240204  lw $4, 516($1)           
+[80000238] 001b0821  addu $1, $0, $27         ; 157: move $at $k1 # Restore $at 
+[8000023c] 40806800  mtc0 $0, $13             ; 160: mtc0 $0 $13 # Clear Cause register 
+[80000240] 401a6000  mfc0 $26, $12            ; 162: mfc0 $k0 $12 # Set Status register 
+[80000244] 375a0001  ori $26, $26, 1          ; 163: ori $k0 0x1 # Interrupts enabled 
+[80000248] 409a6000  mtc0 $26, $12            ; 164: mtc0 $k0 $12 
+[8000024c] 42000018  eret                     ; 167: eret 
+
+
+User data segment [10000000]..[10040000]
+[10000000]..[1000ffff]  00000000
+[10010000]    1634036816  1696621939  1919251566  1701344288    P l e a s e   e n t e r   t h e 
+[10010010]    1936024608  1684370025  1836412448  0544367970      d e s i r e d   n u m b e r   
+[10010020]    1763731055  1734702190  0544436837  0824979803    o f   i n t e g e r s   [ 1 , 1 
+[10010030]    0979185712  1850015776  0544367988  1763733089    0 0 ] :   . E n t e r   a n   i 
+[10010040]    1734702190  0540701285  1634030336  0543712114    n t e g e r :   . S e a r c h   
+[10010050]    0544370534  1952540791  1953392928  1919248229    f o r   w h a t   i n t e g e r 
+[10010060]    0002112063  0543516756  1818324339  1953719660    ? :   . T h e   s m a l l e s t 
+[10010070]    1953392928  1919248229  0544106784  0543516788      i n t e g e r   i n   t h e   
+[10010080]    1953720684  1935767328  1409294394  1814062440    l i s t   w a s :   . T h e   l 
+[10010090]    1701278305  1763734643  1734702190  1763734117    a r g e s t   i n t e g e r   i 
+[100100a0]    1752440942  1768693861  1998615667  0540701537    n   t h e   l i s t   w a s :   
+[100100b0]    1852400128  1601794657  1918985587  1914726499    . b i n a r y _ s e a r c h   r 
+[100100c0]    1819636581  0002112116  0543516756  1667592307    e s u l t :   . T h e   s p e c 
+[100100d0]    1701406313  1852383332  1701274996  1096228978    i f i e d   i n t e g e r   W A 
+[100100e0]    1868963923  0543452789  1948282473  1629513064    S   f o u n d   i n   t h e   a 
+[100100f0]    2036429426  1750335534  1886593125  1718182757    r r a y . . T h e   s p e c i f 
+[10010100]    0543450473  1702129257  0544367975  0542327127    i e d   i n t e g e r   W A S   
+[10010110]    0542396238  1853189990  1852383332  1701344288    N O T   f o u n d   i n   t h e 
+[10010120]    1920098592  0003045729  0000000000  0000000000      a r r a y . . . . . . . . . . 
+[10010130]..[1003ffff]  00000000
+
+
+User Stack [7ffff6fc]..[80000000]
+[7ffff6fc]    0000000009                                        . . . . 
+[7ffff700]    0000000074  0000000123  0000000666  0000000775    J . . . { . . . . . . . . . . . 
+[7ffff710]    0000001938  0000002948  0000239493  0000000001    . . . . . . . . . . . . . . . . 
+[7ffff720]    2147481619  0000000000  2147483636  2147483614    . . . . . . . . . . . . . . . . 
+[7ffff730]    2147483599  2147483578  2147483559  2147483551    . . . . . . . . . . . . . . . . 
+[7ffff740]    2147483533  2147483515  2147483493  2147483458    . . . . { . . . e . . . B . . . 
+[7ffff750]    2147483430  2147483332  2147483279  2147483264    & . . . . . . . . . . . . . . . 
+[7ffff760]    2147483245  2147483213  2147483167  2147483117    m . . . M . . . . . . . . . . . 
+[7ffff770]    2147483093  2147483076  2147483060  2147483047    . . . . . . . . . . . . . . . . 
+[7ffff780]    2147482763  2147482732  2147482686  2147482675    . . . . l . . . > . . . 3 . . . 
+[7ffff790]    2147482658  2147482632  2147482612  2147482586    " . . . . . . . . . . . . . . . 
+[7ffff7a0]    2147482545  2147482498  2147482479  2147482460    . . . . . . . . o . . . \ . . . 
+[7ffff7b0]    2147482438  2147482421  2147482378  2147482359    F . . . 5 . . . . . . . . . . . 
+[7ffff7c0]    2147482331  2147482320  2147482302  2147482282    . . . . . . . . . . . . . . . . 
+[7ffff7d0]    2147482265  2147482181  2147482159  2147482115    . . . . E . . . / . . . . . . . 
+[7ffff7e0]    2147482031  2147482011  2147481987  2147481943    . . . . . . . . . . . . W . . . 
+[7ffff7f0]    2147481920  2147481830  2147481765  2147481729    @ . . . . . . . . . . . . . . . 
+[7ffff800]    2147481705  2147481672  0000000000  0000000000    i . . . H . . . . . . . . . . . 
+[7ffff810]    0788529152  1701670760  2036429871  0796028780    . . . / h o m e / t a y l o r / 
+[7ffff820]    1701080899  1751348015  0795635567  0909276003    C o d e / s c h o o l / c s 2 6 
+[7ffff830]    1919954740  1667590767  1882141812  1701474162    4 / p r o j e c t 4 / p r o j e 
+[7ffff840]    0775189603  0007172961  1599294023  1430406468    c t 4 . a s m . G J S _ D E B U 
+[7ffff850]    1330929479  1396918608  0542329405  1330795077    G _ T O P I C S = J S   E R R O 
+[7ffff860]    1397373778  1196379168  1397376768  1111835743    R ; J S   L O G . G J S _ D E B 
+[7ffff870]    1331644245  1431327829  1953709396  1920099684    U G _ O U T P U T = s t d e r r 
+[7ffff880]    1330202368  1430342751  1162363726  1162108740    . G I O _ L A U N C H E D _ D E 
+[7ffff890]    1330924371  1229348688  1348420940  0842875977    S K T O P _ F I L E _ P I D = 2 
+[7ffff8a0]    0825438521  1330202368  1430342751  1162363726    9 1 3 1 . G I O _ L A U N C H E 
+[7ffff8b0]    1162108740  1330924371  1229348688  0792544588    D _ D E S K T O P _ F I L E = / 
+[7ffff8c0]    0796029813  1918986355  1885417317  1667853424    u s r / s h a r e / a p p l i c 
+[7ffff8d0]    1869182049  1898935150  1768977268  1701064301    a t i o n s / q t s p i m . d e 
+[7ffff8e0]    1869900659  1163067504  1330205523  1095589710    s k t o p . S E S S I O N _ M A 
+[7ffff8f0]    1162297678  1869364562  0795631971  1819894132    N A G E R = l o c a l / t a y l 
+[7ffff900]    1630368367  1077572201  1886221359  1128869423    o r - a i r : @ / t m p / . I C 
+[7ffff910]    1853173061  0825194601  0741617970  2020175477    E - u n i x / 1 2 1 4 , u n i x 
+[7ffff920]    2036429871  0762474348  0980576609  1886221359    / t a y l o r - a i r : / t m p 
+[7ffff930]    1128869423  1853173061  0825194601  0003420466    / . I C E - u n i x / 1 2 1 4 . 
+[7ffff940]    1598506072  1431192909  1163022431  1029196102    X D G _ M E N U _ P R E F I X = 
+[7ffff950]    1836019303  1191193957  1162694478  1397048415    g n o m e - . G N O M E _ D E S 
+[7ffff960]    1347376203  1397052255  1313818963  1027885407    K T O P _ S E S S I O N _ I D = 
+[7ffff970]    1936287860  0762538285  1919968612  1952539493    t h i s - i s - d e p r e c a t 
+[7ffff980]    1912628325  1885302134  1030255713  1920169263    e d . r v m _ p a t h = / u s r 
+[7ffff990]    1634235183  1915708786  1593863542  1953724787    / s h a r e / r v m . _ s y s t 
+[7ffff9a0]    1851747685  1030057313  1853186645  1476425076    e m _ n a m e = U b u n t u . X 
+[7ffff9b0]    1147094852  1598116929  1397901636  1937059645    D G _ D A T A _ D I R S = / u s 
+[7ffff9c0]    1752379250  0795177569  1836019303  1966029413    r / s h a r e / g n o m e : / u 
+[7ffff9d0]    1815048819  1818321775  1634235183  0976184690    s r / l o c a l / s h a r e / : 
+[7ffff9e0]    1920169263  1634235183  0976184690  1918989871    / u s r / s h a r e / : / v a r 
+[7ffff9f0]    1651076143  1634628399  1680827504  1953198949    / l i b / s n a p d / d e s k t 
+[7ffffa00]    1476423791  1130317636  1229344335  1229217607    o p . X D G _ C O N F I G _ D I 
+[7ffffa10]    0792548178  0795047013  0795305080  0761750648    R S = / e t c / x d g / x d g - 
+[7ffffa20]    1836019303  1697593957  2016371572  1124099940    g n o m e : / e t c / x d g . C 
+[7ffffa30]    1414813004  1230983749  1330470733  1162630468    L U T T E R _ I M _ M O D U L E 
+[7ffffa40]    1835628605  1296385792  1413566559  1747926344    = x i m . G E M _ P A T H = / h 
+[7ffffa50]    0795176303  1819894132  0774861423  0795702898    o m e / t a y l o r / . r v m / 
+[7ffffa60]    1936549223  1651864111  0775040377  0976301619    g e m s / r u b y - 2 . 3 . 1 : 
+[7ffffa70]    1836017711  1635004261  1919904889  1987194415    / h o m e / t a y l o r / . r v 
+[7ffffa80]    1701261165  1915712365  0762929781  0775106098    m / g e m s / r u b y - 2 . 3 . 
+[7ffffa90]    1818705969  1818321519  1146572800  1869098813    1 @ g l o b a l . P W D = / h o 
+[7ffffaa0]    1949263213  1869379937  1935605874  1702130553    m e / t a y l o r . _ s y s t e 
+[7ffffab0]    1918984045  2017290339  0912209464  1414594612    m _ a r c h = x 8 6 _ 6 4 . Q T 
+[7ffffac0]    1598900575  1430540109  1765623116  0007566690    _ I M _ M O D U L E = i b u s . 
+[7ffffad0]    1598506072  1380865110  1912615485  1985965430    X D G _ V T N R = 2 . r v m _ v 
+[7ffffae0]    1769173605  0826109551  0775500334  1831346225    e r s i o n = 1 . 2 9 . 1   ( m 
+[7ffffaf0]    1635085921  1593846124  1953724787  1952410981    a n u a l ) . _ s y s t e m _ t 
+[7ffffb00]    1030058105  1970170188  1162281080  1330143053    y p e = L i n u x . G E M _ H O 
+[7ffffb10]    0792544589  1701670760  2036429871  0796028780    M E = / h o m e / t a y l o r / 
+[7ffffb20]    1836479022  1835362095  1970417523  0841840994    . r v m / g e m s / r u b y - 2 
+[7ffffb30]    0825111342  1296320256  1397966163  1028542281    . 3 . 1 . G D M S E S S I O N = 
+[7ffffb40]    1836019303  1987182693  1919967085  2020173413    g n o m e . r v m _ p r e f i x 
+[7ffffb50]    1937059645  1752379250  0006648417  1096766545    = / u s r / s h a r e . Q T _ A 
+[7ffffb60]    1397048131  1229080915  1498696012  1392521533    C C E S S I B I L I T Y = 1 . S 
+[7ffffb70]    1280066888  1937059645  1768042354  1937387374    H E L L = / u s r / b i n / z s 
+[7ffffb80]    1397948520  1430347592  1398753364  1028342607    h . S S H _ A U T H _ S O C K = 
+[7ffffb90]    1886221359  1752396591  2001487149  1987653680    / t m p / s s h - E L w 0 0 y v 
+[7ffffba0]    2020234832  1734422326  0779382373  0875639345    P V j x 6 / a g e n t . 1 2 1 4 
+[7ffffbb0]    1430345728  1380927572  1029264457  1853190703    . X A U T H O R I T Y = / r u n 
+[7ffffbc0]    1702065455  0808529778  1731145776  1479503204    / u s e r / 1 0 0 0 / g d m / X 
+[7ffffbd0]    1752462689  1953067631  1146617977  1163091783    a u t h o r i t y . X D G _ S E 
+[7ffffbe0]    1330205523  1162108750  1330924371  1852259664    S S I O N _ D E S K T O P = g n 
+[7ffffbf0]    0006647151  1146047832  1162430025  1077760850    o m e . X M O D I F I E R S = @ 
+[7ffffc00]    1765633385  0007566690  1598506072  1381127491    i m = i b u s . X D G _ C U R R 
+[7ffffc10]    1599360581  1263748420  1028673364  1297043015    E N T _ D E S K T O P = G N O M 
+[7ffffc20]    1095499845  1698514766  1398103918  1179931950    E . L A N G = e n _ U S . U T F 
+[7ffffc30]    1140865069  1280332617  0977099073  1498218545    - 8 . D I S P L A Y = : 1 . M Y 
+[7ffffc40]    1112887903  1330143065  0792544589  0796029813    _ R U B Y _ H O M E = / u s r / 
+[7ffffc50]    1918986355  1987194725  1970417517  1936025954    s h a r e / r v m / r u b i e s 
+[7ffffc60]    1651864111  0775040377  0003223091  1598506072    / r u b y - 2 . 3 . 1 . X D G _ 
+[7ffffc70]    1414419794  1598377289  1028802884  1853190703    R U N T I M E _ D I R = / r u n 
+[7ffffc80]    1702065455  0808529778  1342189616  1028150337    / u s e r / 1 0 0 0 . P A T H = 
+[7ffffc90]    1836017711  1635004261  1919904889  1852400175    / h o m e / t a y l o r / b i n 
+[7ffffca0]    1869098810  1949263213  1869379937  1814966130    : / h o m e / t a y l o r / . l 
+[7ffffcb0]    1818321775  1852400175  1869098810  1949263213    o c a l / b i n : / h o m e / t 
+[7ffffcc0]    1869379937  1915629426  1731161462  0796093797    a y l o r / . r v m / g e m s / 
+[7ffffcd0]    2036495730  0858665517  1647259950  0792358505    r u b y - 2 . 3 . 1 / b i n : / 
+[7ffffce0]    1701670760  2036429871  0796028780  1836479022    h o m e / t a y l o r / . r v m 
+[7ffffcf0]    1835362095  1970417523  0841840994  0825111342    / g e m s / r u b y - 2 . 3 . 1 
+[7ffffd00]    1869375296  0795631970  0980314466  1920169263    @ g l o b a l / b i n : / u s r 
+[7ffffd10]    1634235183  1915708786  1915710838  1701405301    / s h a r e / r v m / r u b i e 
+[7ffffd20]    1970417523  0841840994  0825111342  1852400175    s / r u b y - 2 . 3 . 1 / b i n 
+[7ffffd30]    1937059642  1869361010  0795631971  1852400243    : / u s r / l o c a l / s b i n 
+[7ffffd40]    1937059642  1869361010  0795631971  0980314466    : / u s r / l o c a l / b i n : 
+[7ffffd50]    1920169263  1768059695  1966029422  1647276659    / u s r / s b i n : / u s r / b 
+[7ffffd60]    0792358505  1852400243  1768042298  1966029422    i n : / s b i n : / b i n : / u 
+[7ffffd70]    1731162739  1936026977  1937059642  1869361010    s r / g a m e s : / u s r / l o 
+[7ffffd80]    0795631971  1701667175  1932474995  0795894126    c a l / g a m e s : / s n a p / 
+[7ffffd90]    0980314466  1920169263  1634235183  1915708786    b i n : / u s r / s h a r e / r 
+[7ffffda0]    1647275382  1459646057  1329876553  1413566551    v m / b i n . W I N D O W P A T 
+[7ffffdb0]    0003292488  1380275029  1162690894  2036429885    H = 2 . U S E R N A M E = t a y 
+[7ffffdc0]    0007499628  1598506072  1397966163  1598967625    l o r . X D G _ S E S S I O N _ 
+[7ffffdd0]    0826098761  1112887808  1163288409  1330205522    I D = 1 . R U B Y _ V E R S I O 
+[7ffffde0]    1970421070  0841840994  0825111342  1178944512    N = r u b y - 2 . 3 . 1 . D E F 
+[7ffffdf0]    1414288705  1095786323  0792545364  0796029813    A U L T S _ P A T H = / u s r / 
+[7ffffe00]    1918986355  1667706725  0795242095  1836019303    s h a r e / g c o n f / g n o m 
+[7ffffe10]    1701064293  1819631974  1634741876  1224763508    e . d e f a u l t . p a t h . I 
+[7ffffe20]    1129464402  1937059645  1752379250  0795177569    R B R C = / u s r / s h a r e / 
+[7ffffe30]    0795702898  1768060274  1915712357  0762929781    r v m / r u b i e s / r u b y - 
+[7ffffe40]    0775106098  1764634417  1668440690  1836478976    2 . 3 . 1 / . i r b r c . r v m 
+[7ffffe50]    1852400223  1952542815  1966030184  1932489331    _ b i n _ p a t h = / u s r / s 
+[7ffffe60]    1701994856  1836479023  1852400175  1263814400    h a r e / r v m / b i n . G T K 
+[7ffffe70]    1598900575  1430540109  1765623116  0007566690    _ I M _ M O D U L E = i b u s . 
+[7ffffe80]    1313296204  1027951937  1819894132  1291874927    L O G N A M E = t a y l o r . M 
+[7ffffe90]    1094995521  1498566484  1413566559  1966030152    A N D A T O R Y _ P A T H = / u 
+[7ffffea0]    1932489331  1701994856  1868785455  1731159662    s r / s h a r e / g c o n f / g 
+[7ffffeb0]    1701670766  1851878702  1869898084  1882093938    n o m e . m a n d a t o r y . p 
+[7ffffec0]    0006845537  1398096452  1397052255  1313818963    a t h . D B U S _ S E S S I O N 
+[7ffffed0]    1398096479  1145323871  1397966162  1768846653    _ B U S _ A D D R E S S = u n i 
+[7ffffee0]    1650539128  1634890867  0792556643  0795897204    x : a b s t r a c t = / t m p / 
+[7ffffef0]    1937072740  1718113837  1869900390  0743271033    d b u s - V h f f j t o y j M , 
+[7fffff00]    1684632935  1714827581  1664300081  1667588921    g u i d = 1 6 f 1 4 3 c 9 c e c 
+[7fffff10]    0859268198  1681221217  1667578160  0825832755    f d 7 3 a f 5 d 0 9 e c 3 5 9 1 
+[7fffff20]    0858993509  1413939249  1330470731  1162630468    e 3 3 3 1 . G T K _ M O D U L E 
+[7fffff30]    1634155859  1631218793  1647143796  1734633842    S = g a i l : a t k - b r i d g 
+[7fffff40]    1414594661  1313426527  1096767573  1397048131    e . Q T _ L I N U X _ A C C E S 
+[7fffff50]    1229080915  1498696012  1464615263  1599297857    S I B I L I T Y _ A L W A Y S _ 
+[7fffff60]    0826101327  1397048320  1347376203  1397052255    O N = 1 . D E S K T O P _ S E S 
+[7fffff70]    1313818963  1869506365  1358980461  1230976084    S I O N = g n o m e . Q T 4 _ I 
+[7fffff80]    1330470733  1162630468  1835628605  1297041408    M _ M O D U L E = x i m . H O M 
+[7fffff90]    1747926341  0795176303  1819894132  1392538223    E = / h o m e / t a y l o r . S 
+[7fffffa0]    1280724040  1392521277  1096763475  1414415687    H L V L = 0 . S S H _ A G E N T 
+[7fffffb0]    1145655391  0875770173  1146617909  1163091783    _ P I D = 1 3 4 5 . X D G _ S E 
+[7fffffc0]    1330205523  1498701646  2017281360  1476407601    S S I O N _ T Y P E = x 1 1 . X 
+[7fffffd0]    1398753092  1028931909  1952540019  1935605808    D G _ S E A T = s e a t 0 . _ s 
+[7fffffe0]    1702130553  1702256493  1869181810  0909196654    y s t e m _ v e r s i o n = 1 6 
+[7ffffff0]    0003420206  1380275029  2036429885  0007499628    . 0 4 . U S E R = t a y l o r . 
+
+
+Kernel data segment [90000000]..[90010000]
+[90000000]    2017796128  1953523043  0544108393  1668227072        E x c e p t i o n   .   o c 
+[90000010]    1920103779  1629512805  1763730542  1919905383    c u r r e d   a n d   i g n o r 
+[90000020]    0000681061  1230708768  1919251566  1953527154    e d . .     [ I n t e r r u p t 
+[90000030]    0536879197  1280596768  0536894786  1280596768    ]   .     [ T L B ] .     [ T L 
+[90000040]    0536894786  1280596768  0536894786  1682004768    B ] .     [ T L B ] .     [ A d 
+[90000050]    1936028260  1919230067  0544370546  1763733097    d r e s s   e r r o r   i n   i 
+[90000060]    0796160878  1635017060  1952802336  0542992483    n s t / d a t a   f e t c h ]   
+[90000070]    1528832000  1919181889  0544437093  1869771365    .     [ A d d r e s s   e r r o 
+[90000080]    1852383346  1869902624  0542991730  1528832000    r   i n   s t o r e ]   .     [ 
+[90000090]    0543449410  1953721961  1952675186  0544108393    B a d   i n s t r u c t i o n   
+[900000a0]    1919181921  1567847269  0538968096  1684095579    a d d r e s s ]   .     [ B a d 
+[900000b0]    1952539680  1684086881  1936028260  0002121075      d a t a   a d d r e s s ]   . 
+[900000c0]    1163599904  1919906418  0544106784  1668512115        [ E r r o r   i n   s y s c 
+[900000d0]    1567386721  0538968096  1701986907  1869638497    a l l ]   .     [ B r e a k p o 
+[900000e0]    1567911529  0538968096  1936020059  1702261349    i n t ]   .     [ R e s e r v e 
+[900000f0]    1852383332  1970435187  1869182051  0002121070    d   i n s t r u c t i o n ]   . 
+[90000100]    1528832000  1953067585  1952804200  1864393577    .     [ A r i t h m e t i c   o 
+[90000110]    1718773110  1568108396  0538968096  1634882651    v e r f l o w ]   .     [ T r a 
+[90000120]    0002121072  1528832000  1634692166  1735289204    p ]   . .     [ F l o a t i n g 
+[90000130]    1768910880  0542995566  0536870912  1866685216      p o i n t ]   . . .     [ C o 
+[90000140]    1668248176  0006107680  0536870912  1145920288    p r o c   2 ] . . . .     [ M D 
+[90000150]    0006117453  1465589792  1751348321  0538968157    M X ] .     [ W a t c h ] .     
+[90000160]    1667321179  1701734760  1701339936  0006122339    [ M a c h i n e   c h e c k ] . 
+[90000170]    0000000000  1528832000  1751343427  0000023909    . . . . .     [ C a c h e ] . . 
+[90000180]    1879048156  1879048141  1879048133  1879048125    $ . . . 3 . . . ; . . . C . . . 
+[90000190]    1879048117  1879048079  1879048051  1879048022    K . . . q . . . . . . . . . . . 
+[900001a0]    1879048000  1879047978  1879047962  1879047936    . . . . . . . . . . . . . . . . 
+[900001b0]    1879047935  1879047910  1879047900  1879047899    . . . . . . . . $ . . . % . . . 
+[900001c0]    1879047879  1879047878  1879047877  1879047864    9 . . . : . . . ; . . . H . . . 
+[900001d0]    1879047863  1879047862  1879047861  1879047852    I . . . J . . . K . . . T . . . 
+[900001e0]    1879047842  1879047824  1879047823  1879047822    ^ . . . p . . . q . . . r . . . 
+[900001f0]    1879047821  1879047820  1879047819  1879047809    s . . . t . . . u . . . . . . . 
+[90000200]..[9000ffff]  00000000
+
+
+Please enter the desired number of integers [1,100]: 8
+Enter an integer: 2948
+Enter an integer: 666
+Enter an integer: 1938
+Enter an integer: 239493
+Enter an integer: 775
+Enter an integer: 74
+Enter an integer: 9
+Enter an integer: 123
+9 74 123 666 775 1938 2948 239493 
+The smallest integer in the list was: 9
+The largest integer in the list was: 239493
+Search for what integer?: 239493
+
+The specified integer WAS found in the array.
