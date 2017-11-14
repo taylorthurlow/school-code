@@ -57,3 +57,6 @@ Style/StructInheritance:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/GuardClause:
+  Enabled: false
