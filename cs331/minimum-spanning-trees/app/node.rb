@@ -6,6 +6,6 @@ class Node
   end
 
   def to_s
-    return "#{@label}"
+    return @label.to_s
   end
 end

@@ -41,8 +41,6 @@ class Graph
       result_edges.add edge
     end
 
-    debugger
-
-    return result_nodes
+    return result_edges
   end
 end
