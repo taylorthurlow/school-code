@@ -32,13 +32,13 @@ transition_graph = [
 # ]
 
 nodes = []
-transition_graph.length.times do |i|
-  nodes << Node.new(i)
+transition_graph.length.times do |a|
+  nodes << Node.new(a)
 end
 
 edges = []
-transition_graph.length.times do |i|
-  transition_graph[i].each_with_index do |j, k|
+transition_graph.length.times do |a|
+  transition_graph[a].each_with_index do |j, k|
     edges << Edge.new(nodes[i], j, nodes[k]) if j.positive? && (j != Float::INFINITY)
   end
 end
