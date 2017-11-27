@@ -8,6 +8,14 @@ class Graph
     return @edges.sort_by(&:weight)
   end
 
+  def edge_weight(from_label, to_label)
+    from = @nodes.find { |n| n.label == from_label }
+    to = @nodes.find { |n| n.label == to_label }
+    return Float::INFINITY if from.nil? || to.nil?
+    edge = @edges.find { |e| e.from == from && e.to == to }
+    return edge.nil? ? Float::INFINITY : edge.weight
+  end
+
   def kruskals
     # initialize empty result graph
     result_nodes = Set.new
@@ -18,9 +26,6 @@ class Graph
     @nodes.each do |node|
       result_nodes << Set.new([node])
     end
-
-    # sort all edges by weight and move them into a new set
-    sorted_edges = @edges.sort_by(&:weight)
 
     sorted_edges.each do |edge|
       # check if the nodes connected by the edge are already in the same set

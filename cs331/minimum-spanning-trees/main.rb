@@ -13,12 +13,14 @@ Dir["#{File.dirname(__FILE__)}/app/*.rb"].each { |f| require f }
 puts "=== Kruskal's and Prim's Algorithms Analysis Script ==="
 puts ''
 
+i = Float::INFINITY
+
 transition_graph = [
   [0, 3, 5, 7, 6],
   [3, 0, 2, 1, 1],
   [5, 2, 0, 4, 3],
-  [7, 1, 4, 0, 8],
-  [6, 1, 3, 8, 0]
+  [7, 1, 4, 0, i],
+  [6, 1, 3, i, 0]
 ]
 
 # transition_graph = [
@@ -37,7 +39,7 @@ end
 edges = []
 transition_graph.length.times do |i|
   transition_graph[i].each_with_index do |j, k|
-    edges << Edge.new(nodes[i], j, nodes[k]) if j.positive?
+    edges << Edge.new(nodes[i], j, nodes[k]) if j.positive? && (j != Float::INFINITY)
   end
 end
 
@@ -50,3 +52,11 @@ kruskals_soln = graph.kruskals
 
 puts 'Solution:'
 kruskals_soln.each { |e| puts e }
+
+puts ''
+puts 'Sorted edges:'
+graph.sorted_edges.each { |e| puts e }
+
+puts ''
+puts 'Testing edge_weight:'
+puts graph.edge_weight(3, 4)
