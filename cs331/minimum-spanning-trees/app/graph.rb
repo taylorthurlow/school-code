@@ -4,6 +4,10 @@ class Graph
     @edges = edges
   end
 
+  def sorted_edges
+    return @edges.sort_by(&:weight)
+  end
+
   def kruskals
     # initialize empty result graph
     result_nodes = Set.new
