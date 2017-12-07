@@ -1,7 +1,19 @@
 class Graph
-  def initialize(nodes, edges)
-    @nodes = nodes
-    @edges = edges
+  attr_accessor :nodes, :edges
+
+  def initialize(transition_matrix)
+    @nodes = []
+    @edges = []
+
+    transition_matrix.length.times do |a|
+      @nodes << Node.new(a)
+    end
+
+    transition_matrix.length.times do |a|
+      transition_matrix[a].each_with_index do |j, k|
+        @edges << Edge.new(@nodes[a], j, @nodes[k]) if j.positive? && (j != Float::INFINITY)
+      end
+    end
   end
 
   def sorted_edges
@@ -14,6 +26,10 @@ class Graph
     return Float::INFINITY if from.nil? || to.nil?
     edge = @edges.find { |e| e.from == from && e.to == to }
     return edge.nil? ? Float::INFINITY : edge.weight
+  end
+
+  def random_graph(num_nodes, dense = false)
+
   end
 
   def kruskals
