@@ -28,8 +28,19 @@ class Graph
     return edge.nil? ? Float::INFINITY : edge.weight
   end
 
-  def random_graph(num_nodes, dense = false)
+  def self.new_random(num_nodes, dense = false)
+    transition_matrix = []
+    num_nodes.times do |i|
+      row = []
+      i.times do
+        edge_exists = dense ? rand(0..100) < 75 : rand(0..100) < 15
+        row << rand(0..10) if edge_exists
+      end
+      row << 0
+      transition_matrix << row
+    end
 
+    return Graph.new(transition_matrix)
   end
 
   def kruskals

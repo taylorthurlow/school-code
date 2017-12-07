@@ -22,7 +22,9 @@ test_matrix = [
   [6, 1, 3, i, 0]
 ]
 
-graph = Graph.new(test_matrix)
+# graph = Graph.new(test_matrix)
+
+graph = Graph.new_random(10, true)
 
 puts 'Result graph:'
 puts "  Num nodes: #{graph.nodes.count}"
