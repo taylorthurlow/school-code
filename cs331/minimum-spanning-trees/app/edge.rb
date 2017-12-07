@@ -7,6 +7,10 @@ class Edge
     @to = to
   end
 
+  def nodes
+    return [@from, @to]
+  end
+
   def to_s
     return "(#{@from},#{@weight},#{@to})"
   end

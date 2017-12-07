@@ -14,23 +14,29 @@ puts ''
 
 i = Float::INFINITY
 
-test_matrix = [
-  [0],
-  [3, 0],
-  [5, 2, 0],
-  [7, 1, 4, 0],
-  [6, 1, 3, i, 0]
-]
+# test_matrix = [
+#   [0],
+#   [3, 0],
+#   [1, 2, 0],
+#   [7, 1, 4, 0],
+#   [3, 8, 3, 1, 0],
+#   [6, 9, 4, 5, 2, 0]
+# ]
 
-# graph = Graph.new(test_matrix)
+# graph = Graph.new(transition_matrix: test_matrix)
 
-graph = Graph.new_random(10, true)
+500.times do
+  graph = Graph.new_random(10, false)
 
-puts 'Result graph:'
-puts "  Num nodes: #{graph.nodes.count}"
-puts "  Num edges: #{graph.edges.count}\n\n"
+  puts "Num nodes: #{graph.nodes.count}"
+  puts "Num edges: #{graph.edges.count}"
 
-kruskals_soln = graph.kruskals
+  kruskals_soln = graph.kruskals
+  puts "Kruskals Solution: (#{kruskals_soln.edges.count} edges, #{kruskals_soln.nodes.count} nodes): #{kruskals_soln.edges.map(&:weight).sum}"
+  # kruskals_soln.edges.each { |e| puts e }
 
-puts 'Solution:'
-kruskals_soln.each { |e| puts e }
+  prims_soln = graph.prims
+  puts "Prims Solution (#{prims_soln.edges.count} edges, #{prims_soln.nodes.count} nodes): #{prims_soln.edges.map(&:weight).sum}"
+  # prims_soln.edges.each { |e| puts e }
+  puts '-------------------------------'
+end

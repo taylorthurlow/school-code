@@ -1,23 +1,62 @@
 class Graph
   attr_accessor :nodes, :edges
 
-  def initialize(transition_matrix)
-    @nodes = []
-    @edges = []
+  def initialize(args)
+    @nodes = args[:nodes].nil? ? [] : args[:nodes]
+    @edges = args[:edges].nil? ? [] : args[:edges]
 
-    transition_matrix.length.times do |a|
-      @nodes << Node.new(a)
-    end
+    if args[:transition_matrix]
+      args[:transition_matrix].length.times do |a|
+        @nodes << Node.new(a)
+      end
 
-    transition_matrix.length.times do |a|
-      transition_matrix[a].each_with_index do |j, k|
-        @edges << Edge.new(@nodes[a], j, @nodes[k]) if j.positive? && (j != Float::INFINITY)
+      args[:transition_matrix].length.times do |a|
+        args[:transition_matrix][a].each_with_index do |j, k|
+          @edges << Edge.new(@nodes[a], j, @nodes[k]) if j.positive? && (j != Float::INFINITY)
+        end
       end
     end
   end
 
+  def self.new_random(num_nodes, dense = false)
+    nodes = []
+    edges = []
+    num_nodes.times { |i| nodes << Node.new(i) }
+
+    nodes.each do |n|
+      num_connections = 0
+      (nodes - [n]).each do |other_node|
+        exists = edges.any? { |e| e.nodes.sort_by!(&:label) == [n, other_node].sort_by!(&:label) }
+        chance = dense ? rand(0..100) < 75 : rand(0..100) < 15
+        if chance && !exists
+          edges << Edge.new(n, rand(1..100), other_node)
+          num_connections += 1
+        end
+      end
+
+      # make sure it has at least one connection
+      edges << Edge.new(n, rand(1..100), (nodes - [n]).sample) if num_connections.zero?
+    end
+
+    return Graph.new(nodes: nodes, edges: edges)
+  end
+
+  def neighbors(node)
+    edges = node_edges(node)
+    return edges.map(&:nodes).flatten.uniq - [node]
+  end
+
   def sorted_edges
     return @edges.sort_by(&:weight)
+  end
+
+  def node_edges(nodes)
+    nodes = [nodes] unless nodes.is_a? Array
+    edges = []
+    nodes.each do |n|
+      edges << @edges.select { |e| e.nodes.include? n }
+    end
+    return edges.flatten.uniq
   end
 
   def edge_weight(from_label, to_label)
@@ -28,19 +67,26 @@ class Graph
     return edge.nil? ? Float::INFINITY : edge.weight
   end
 
-  def self.new_random(num_nodes, dense = false)
-    transition_matrix = []
-    num_nodes.times do |i|
-      row = []
-      i.times do
-        edge_exists = dense ? rand(0..100) < 75 : rand(0..100) < 15
-        row << rand(0..10) if edge_exists
-      end
-      row << 0
-      transition_matrix << row
+  def prims
+    # initialize empty result graph, add arbitrary root node
+    result_nodes = []
+    result_edges = []
+    result_nodes << @nodes.first
+
+    while result_nodes.size < @nodes.size
+      acceptable_edges = (node_edges(result_nodes) - result_edges)
+      acceptable_edges.reject! { |ae| ae.nodes & result_nodes == ae.nodes }
+
+      debugger if acceptable_edges.empty?
+      edge = acceptable_edges.min_by(&:weight)
+      # puts "Picked min weight edge: #{edge.weight}"
+      result_edges << edge
+      result_nodes << (edge.nodes - result_nodes).first
     end
 
-    return Graph.new(transition_matrix)
+    raise 'Prims result node count mismatch' if result_nodes.sort_by(&:label) != @nodes.sort_by(&:label)
+
+    return Graph.new(nodes: result_nodes, edges: result_edges)
   end
 
   def kruskals
@@ -50,9 +96,7 @@ class Graph
 
     # add a set to that result for each node in the graph
     # now, result_nodes.count == @nodes.count
-    @nodes.each do |node|
-      result_nodes << Set.new([node])
-    end
+    @nodes.each { |node| result_nodes << Set.new([node]) }
 
     sorted_edges.each do |edge|
       # check if the nodes connected by the edge are already in the same set
@@ -77,6 +121,8 @@ class Graph
       result_edges.add edge
     end
 
-    return result_edges
+    raise 'Kruskals result node count mismatch' if result_nodes.flatten.to_a.sort_by(&:label) != @nodes.sort_by(&:label)
+
+    return Graph.new(nodes: result_nodes.flatten.to_a, edges: result_edges.to_a)
   end
 end
