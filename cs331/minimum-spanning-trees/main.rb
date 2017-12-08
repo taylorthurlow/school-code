@@ -38,5 +38,8 @@ i = Float::INFINITY
   prims_soln = graph.prims
   puts "Prims Solution (#{prims_soln.edges.count} edges, #{prims_soln.nodes.count} nodes): #{prims_soln.edges.map(&:weight).sum}"
   # prims_soln.edges.each { |e| puts e }
+
+  raise 'Solution mismatch error' if kruskals_soln.edges.map(&:weight).sum != prims_soln.edges.map(&:weight).sum
+
   puts '-------------------------------'
 end

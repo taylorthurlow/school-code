@@ -21,21 +21,20 @@ class Graph
   def self.new_random(num_nodes, dense = false)
     nodes = []
     edges = []
-    num_nodes.times { |i| nodes << Node.new(i) }
+    num_nodes.times do |i|
+      new_node = Node.new(i)
+      edges << Edge.new(new_node, rand(1..100), nodes.sample) unless i.zero?
+      nodes << new_node
+    end
 
-    nodes.each do |n|
-      num_connections = 0
-      (nodes - [n]).each do |other_node|
-        exists = edges.any? { |e| e.nodes.sort_by!(&:label) == [n, other_node].sort_by!(&:label) }
-        chance = dense ? rand(0..100) < 75 : rand(0..100) < 15
-        if chance && !exists
-          edges << Edge.new(n, rand(1..100), other_node)
-          num_connections += 1
-        end
-      end
+    possible_edges_divisor = dense ? 2 : 4
+    max_edges = nodes.count * (nodes.count - 1) / possible_edges_divisor
 
-      # make sure it has at least one connection
-      edges << Edge.new(n, rand(1..100), (nodes - [n]).sample) if num_connections.zero?
+    while edges.count < max_edges
+      from = nodes.sample
+      to = (nodes - [from]).sample
+      exists = edges.any? { |e| e.nodes.sort_by!(&:label) == [from, to].sort_by!(&:label) }
+      edges << Edge.new(from, rand(0..100), to) unless exists
     end
 
     return Graph.new(nodes: nodes, edges: edges)
