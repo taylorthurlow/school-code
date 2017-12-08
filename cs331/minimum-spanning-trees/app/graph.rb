@@ -27,48 +27,77 @@ class Graph
       nodes.add new_node
     end
 
-    possible_edges_divisor = dense ? 2 : 10
+    possible_edges_divisor = dense ? 4 : 20
     max_edges = nodes.count * (nodes.count - 1) / possible_edges_divisor
 
-    while edges.count < max_edges
+    num_edges = edges.count
+    while num_edges < max_edges
       from = nodes.to_a.sample
       to = (nodes - [from]).to_a.sample
-      exists = edges.any? do |e|
-        (e.from == from && e.to == to) || (e.from == to && e.to == from)
+      exists = !(from.edges & to.edges).empty?
+      # exists = edges.any? do |e|
+      #   e.nodes.include?(from) && e.nodes.include?(to)
+      #   # (e.from == from && e.to == to) || (e.from == to && e.to == from)
+      # end
+      unless exists
+        edges << Edge.new(from, rand(0..100), to)
+        num_edges += 1
       end
-      edges << Edge.new(from, rand(0..100), to) unless exists
     end
 
     return Graph.new(nodes: nodes, edges: edges)
   end
 
   def node_edges(nodes)
-    nodes = Set.new([nodes]) unless nodes.is_a? Set
-    edges = Set.new
-    nodes.each do |n|
-      edges.add(Set.new(@edges.select { |e| e.nodes.include? n }))
-    end
+    edges = nodes.is_a?(Set) ? nodes.map(&:edges) : nodes.edges
     return edges.flatten.uniq.to_set
   end
 
+  def neighbors(node)
+    edges = node_edges(node)
+    return edges.map { |e| e.other_node(node) }.flatten
+  end
+
   def prims
-    # initialize empty result graph, add arbitrary root node
-    result_nodes = Set.new
-    result_edges = Set.new
-    result_nodes.add @nodes.first
+    costs = []
+    @nodes.count.times { costs << 99999 }
+    edges = []
+    @edges.count.times { edges << nil }
 
-    while result_nodes.size < @nodes.size
-      acceptable_edges = (node_edges(result_nodes).subtract result_edges)
-      acceptable_edges.reject! { |ae| ae.nodes & result_nodes == ae.nodes }
-
-      edge = acceptable_edges.min_by(&:weight)
-      result_edges << edge
-      result_nodes << (edge.nodes - result_nodes).first
+    @nodes.each do |n|
+      min_edge = node_edges(n).min_by(&:weight)
+      edges[n.label] = min_edge
+      costs[n.label] = min_edge.weight
     end
 
-    # raise 'Prims result node count mismatch' if result_nodes.sort != @nodes.sort
+    forest_nodes = Set.new
+    forest_edges = Set.new
+    unvisited = @nodes.dup
 
-    return Graph.new(nodes: result_nodes, edges: result_edges)
+    initial_node = @nodes.first
+    costs[initial_node.label] = 0
+    unvisited.delete initial_node
+
+    until unvisited.empty?
+      # find minimum cost for a vertex that is STILL IN unvisited
+      pairs = unvisited.map { |u| [u.label, costs[u.label]] }
+      min_index = pairs.min_by { |pair| pair[1] }[0]
+
+      node_to_remove = unvisited.find { |n| n.label == min_index }
+      unvisited.delete node_to_remove
+      forest_nodes.add node_to_remove
+      forest_edges.add edges[node_to_remove.label] if edges[min_index].weight < 99999
+
+      node_edges(node_to_remove).each do |ne|
+        other_node = ne.other_node(node_to_remove)
+        if unvisited.include?(other_node) && ne.weight < costs[other_node.label]
+          costs[other_node.label] = ne.weight
+          edges[other_node.label] = ne
+        end
+      end
+    end
+
+    return Graph.new(nodes: forest_nodes, edges: forest_edges)
   end
 
   def kruskals
@@ -112,11 +141,8 @@ class Graph
     return @edges.sort_by(&:weight)
   end
 
-  def edge_weight(from_label, to_label)
-    from = @nodes.find { |n| n.label == from_label }
-    to = @nodes.find { |n| n.label == to_label }
-    return Float::INFINITY if from.nil? || to.nil?
-    edge = @edges.find { |e| e.from == from && e.to == to }
-    return edge.nil? ? Float::INFINITY : edge.weight
-  end
+  # def edge_weight(from, to)
+  #   edge = @edges.find { |e| e.from.nodes == e.to.nodes }
+  #   return edge.nil? ? Float::INFINITY : edge.weight
+  # end
 end
