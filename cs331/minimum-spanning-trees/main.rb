@@ -5,6 +5,7 @@ Bundler.require(:default)
 
 # Require libraries
 require 'set'
+require 'benchmark'
 require 'ruby-prof'
 
 # Require all ruby files
@@ -13,13 +14,25 @@ Dir["#{File.dirname(__FILE__)}/app/*.rb"].each { |f| require f }
 puts "=== Kruskal's and Prim's Algorithms Analysis Script ==="
 puts ''
 
-[false, true].each do |sparseness|
-  [100].each do |num_nodes|
-    RubyProf.start
-    Graph.new_random(num_nodes, sparseness)
-    result = RubyProf.stop
+[false].each do |sparseness|
+  [50].each do |num_nodes|
+    # RubyProf.start
+    graph = Graph.new_random(num_nodes, sparseness)
+    # graph_result = RubyProf.stop
     puts "#{num_nodes} nodes, #{sparseness ? 'dense' : 'sparse'}:"
-    RubyProf::FlatPrinter.new(result).print(STDOUT)
+    # RubyProf::FlatPrinter.new(graph_result).print(STDOUT)
+
+    # RubyProf.start
+    # graph.kruskals
+    # kruskals_result = RubyProf.stop
+    # RubyProf::FlatPrinter.new(kruskals_result).print(STDOUT)
+
+    RubyProf.start
+    graph.prims
+    prims_result = RubyProf.stop
+    RubyProf::FlatPrinter.new(prims_result).print(STDOUT)
+
+    puts '--------------------------------------------------------'
   end
 end
 

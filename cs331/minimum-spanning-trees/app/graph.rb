@@ -2,8 +2,8 @@ class Graph
   attr_accessor :nodes, :edges
 
   def initialize(args)
-    @nodes = args[:nodes].nil? ? [] : args[:nodes]
-    @edges = args[:edges].nil? ? [] : args[:edges]
+    @nodes = args[:nodes].nil? ? Set.new : args[:nodes]
+    @edges = args[:edges].nil? ? Set.new : args[:edges]
 
     if args[:transition_matrix]
       args[:transition_matrix].length.times do |a|
@@ -19,22 +19,21 @@ class Graph
   end
 
   def self.new_random(num_nodes, dense = false)
-    nodes = []
-    edges = []
+    nodes = Set.new
+    edges = Set.new
     num_nodes.times do |i|
       new_node = Node.new(i)
-      edges << Edge.new(new_node, rand(1..100), nodes.sample) unless i.zero?
-      nodes << new_node
+      edges.add Edge.new(new_node, rand(1..100), nodes.to_a.sample) unless i.zero?
+      nodes.add new_node
     end
 
-    possible_edges_divisor = dense ? 2 : 4
+    possible_edges_divisor = dense ? 2 : 10
     max_edges = nodes.count * (nodes.count - 1) / possible_edges_divisor
 
     while edges.count < max_edges
-      from = nodes.sample
-      to = (nodes - [from]).sample
+      from = nodes.to_a.sample
+      to = (nodes - [from]).to_a.sample
       exists = edges.any? do |e|
-        # e.nodes.sort == [from, to].sort
         (e.from == from && e.to == to) || (e.from == to && e.to == from)
       end
       edges << Edge.new(from, rand(0..100), to) unless exists
@@ -43,44 +42,26 @@ class Graph
     return Graph.new(nodes: nodes, edges: edges)
   end
 
-  def neighbors(node)
-    edges = node_edges(node)
-    return edges.map(&:nodes).flatten.uniq - [node]
-  end
-
-  def sorted_edges
-    return @edges.sort_by(&:weight)
-  end
-
   def node_edges(nodes)
-    nodes = [nodes] unless nodes.is_a? Array
-    edges = []
+    nodes = Set.new([nodes]) unless nodes.is_a? Set
+    edges = Set.new
     nodes.each do |n|
-      edges << @edges.select { |e| e.nodes.include? n }
+      edges.add(Set.new(@edges.select { |e| e.nodes.include? n }))
     end
-    return edges.flatten.uniq
-  end
-
-  def edge_weight(from_label, to_label)
-    from = @nodes.find { |n| n.label == from_label }
-    to = @nodes.find { |n| n.label == to_label }
-    return Float::INFINITY if from.nil? || to.nil?
-    edge = @edges.find { |e| e.from == from && e.to == to }
-    return edge.nil? ? Float::INFINITY : edge.weight
+    return edges.flatten.uniq.to_set
   end
 
   def prims
     # initialize empty result graph, add arbitrary root node
-    result_nodes = []
-    result_edges = []
-    result_nodes << @nodes.first
+    result_nodes = Set.new
+    result_edges = Set.new
+    result_nodes.add @nodes.first
 
     while result_nodes.size < @nodes.size
-      acceptable_edges = (node_edges(result_nodes) - result_edges)
+      acceptable_edges = (node_edges(result_nodes).subtract result_edges)
       acceptable_edges.reject! { |ae| ae.nodes & result_nodes == ae.nodes }
 
       edge = acceptable_edges.min_by(&:weight)
-      # puts "Picked min weight edge: #{edge.weight}"
       result_edges << edge
       result_nodes << (edge.nodes - result_nodes).first
     end
@@ -124,6 +105,18 @@ class Graph
 
     # raise 'Kruskals result node count mismatch' if result_nodes.flatten.to_a.sort != @nodes.sort
 
-    return Graph.new(nodes: result_nodes.flatten.to_a, edges: result_edges.to_a)
+    return Graph.new(nodes: result_nodes.flatten, edges: result_edges)
+  end
+
+  def sorted_edges
+    return @edges.sort_by(&:weight)
+  end
+
+  def edge_weight(from_label, to_label)
+    from = @nodes.find { |n| n.label == from_label }
+    to = @nodes.find { |n| n.label == to_label }
+    return Float::INFINITY if from.nil? || to.nil?
+    edge = @edges.find { |e| e.from == from && e.to == to }
+    return edge.nil? ? Float::INFINITY : edge.weight
   end
 end

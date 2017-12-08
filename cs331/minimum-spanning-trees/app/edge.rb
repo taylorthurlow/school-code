@@ -8,7 +8,7 @@ class Edge
   end
 
   def nodes
-    return [@from, @to]
+    return Set.new([@from, @to])
   end
 
   def to_s
