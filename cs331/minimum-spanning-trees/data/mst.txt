@@ -1,0 +1,55 @@
+Generating graph... 0.00017 seconds, contains 25 nodes, 30 edges, sparse:
+Performing kruskals... 0.001 seconds
+Performing prims... 0.00047 seconds
+--------------------------------------------------------
+Generating graph... 0.01078 seconds, contains 100 nodes, 495 edges, sparse:
+Performing kruskals... 0.007 seconds
+Performing prims... 0.00451 seconds
+--------------------------------------------------------
+Generating graph... 0.18011 seconds, contains 250 nodes, 3112 edges, sparse:
+Performing kruskals... 0.043 seconds
+Performing prims... 0.02388 seconds
+--------------------------------------------------------
+Generating graph... 1.34396 seconds, contains 500 nodes, 12475 edges, sparse:
+Performing kruskals... 0.164 seconds
+Performing prims... 0.09905 seconds
+--------------------------------------------------------
+Generating graph... 10.3618 seconds, contains 1000 nodes, 49950 edges, sparse:
+Performing kruskals... 0.706 seconds
+Performing prims... 0.32446 seconds
+--------------------------------------------------------
+Generating graph... 165.64767 seconds, contains 2500 nodes, 312375 edges, sparse:
+Performing kruskals... 4.281 seconds
+Performing prims... 1.87133 seconds
+--------------------------------------------------------
+Generating graph... 1552.78243 seconds, contains 5000 nodes, 1249750 edges, sparse:
+Performing kruskals... 18.56 seconds
+Performing prims... 8.31598 seconds
+--------------------------------------------------------
+Generating graph... 0.00215 seconds, contains 25 nodes, 150 edges, dense:
+Performing kruskals... 0.001 seconds
+Performing prims... 0.00093 seconds
+--------------------------------------------------------
+Generating graph... 0.09987 seconds, contains 100 nodes, 2475 edges, dense:
+Performing kruskals... 0.01 seconds
+Performing prims... 0.01274 seconds
+--------------------------------------------------------
+Generating graph... 1.4778 seconds, contains 250 nodes, 15562 edges, dense:
+Performing kruskals... 0.063 seconds
+Performing prims... 0.07552 seconds
+--------------------------------------------------------
+Generating graph... 12.01564 seconds, contains 500 nodes, 62375 edges, dense:
+Performing kruskals... 0.296 seconds
+Performing prims... 0.31865 seconds
+--------------------------------------------------------
+Generating graph... 97.81514 seconds, contains 1000 nodes, 249750 edges, dense:
+Performing kruskals... 1.313 seconds
+Performing prims... 1.12994 seconds
+--------------------------------------------------------
+Generating graph... 1774.64748 seconds, contains 2500 nodes, 1561875 edges, dense:
+Performing kruskals... 8.813 seconds
+Performing prims... 7.96277 seconds
+--------------------------------------------------------
+Generating graph... 18747.04475 seconds, contains 5000 nodes, 6248750 edges, dense:
+Performing kruskals... 39.268 seconds
+Performing prims... 46.92541 seconds
