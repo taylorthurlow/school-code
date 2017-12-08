@@ -33,7 +33,10 @@ class Graph
     while edges.count < max_edges
       from = nodes.sample
       to = (nodes - [from]).sample
-      exists = edges.any? { |e| e.nodes.sort_by!(&:label) == [from, to].sort_by!(&:label) }
+      exists = edges.any? do |e|
+        # e.nodes.sort == [from, to].sort
+        (e.from == from && e.to == to) || (e.from == to && e.to == from)
+      end
       edges << Edge.new(from, rand(0..100), to) unless exists
     end
 
@@ -76,14 +79,13 @@ class Graph
       acceptable_edges = (node_edges(result_nodes) - result_edges)
       acceptable_edges.reject! { |ae| ae.nodes & result_nodes == ae.nodes }
 
-      debugger if acceptable_edges.empty?
       edge = acceptable_edges.min_by(&:weight)
       # puts "Picked min weight edge: #{edge.weight}"
       result_edges << edge
       result_nodes << (edge.nodes - result_nodes).first
     end
 
-    raise 'Prims result node count mismatch' if result_nodes.sort_by(&:label) != @nodes.sort_by(&:label)
+    # raise 'Prims result node count mismatch' if result_nodes.sort != @nodes.sort
 
     return Graph.new(nodes: result_nodes, edges: result_edges)
   end
@@ -120,7 +122,7 @@ class Graph
       result_edges.add edge
     end
 
-    raise 'Kruskals result node count mismatch' if result_nodes.flatten.to_a.sort_by(&:label) != @nodes.sort_by(&:label)
+    # raise 'Kruskals result node count mismatch' if result_nodes.flatten.to_a.sort != @nodes.sort
 
     return Graph.new(nodes: result_nodes.flatten.to_a, edges: result_edges.to_a)
   end
