@@ -14,13 +14,13 @@ puts "=== Kruskal's and Prim's Algorithms Analysis Script ==="
 puts ''
 
 [false, true].each do |sparseness|
-  [25, 100, 250, 500, 1000].each do |num_nodes|
+  [25, 100, 250, 500, 1000, 2500, 5000].each do |num_nodes|
     graph = nil
     time_graph = Benchmark.realtime do
       print 'Generating graph...'
       graph = Graph.new_random(num_nodes, sparseness)
     end
-    puts " #{time_graph.round(5)} seconds, contains #{num_nodes} nodes, #{sparseness ? 'dense' : 'sparse'}:"
+    puts " #{time_graph.round(5)} seconds, contains #{num_nodes} nodes, #{graph.edges.count} edges, #{sparseness ? 'dense' : 'sparse'}:"
 
     time_kruskals = Benchmark.realtime do
       print 'Performing kruskals... '

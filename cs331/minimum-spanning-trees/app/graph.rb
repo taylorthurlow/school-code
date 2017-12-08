@@ -35,10 +35,6 @@ class Graph
       from = nodes.to_a.sample
       to = (nodes - [from]).to_a.sample
       exists = !(from.edges & to.edges).empty?
-      # exists = edges.any? do |e|
-      #   e.nodes.include?(from) && e.nodes.include?(to)
-      #   # (e.from == from && e.to == to) || (e.from == to && e.to == from)
-      # end
       unless exists
         edges << Edge.new(from, rand(0..100), to)
         num_edges += 1
@@ -59,10 +55,8 @@ class Graph
   end
 
   def prims
-    costs = []
-    @nodes.count.times { costs << 99999 }
-    edges = []
-    @edges.count.times { edges << nil }
+    costs = @nodes.map { 9999 }
+    edges = @edges.map { nil }
 
     @nodes.each do |n|
       min_edge = node_edges(n).min_by(&:weight)
@@ -132,8 +126,6 @@ class Graph
       result_edges.add edge
     end
 
-    # raise 'Kruskals result node count mismatch' if result_nodes.flatten.to_a.sort != @nodes.sort
-
     return Graph.new(nodes: result_nodes.flatten, edges: result_edges)
   end
 
@@ -141,8 +133,8 @@ class Graph
     return @edges.sort_by(&:weight)
   end
 
-  # def edge_weight(from, to)
-  #   edge = @edges.find { |e| e.from.nodes == e.to.nodes }
-  #   return edge.nil? ? Float::INFINITY : edge.weight
-  # end
+  def edge_weight(from, to)
+    edge = @edges.find { |e| e.nodes == Set.new([from, to]) }
+    return edge.nil? ? Float::INFINITY : edge.weight
+  end
 end
