@@ -10,37 +10,34 @@ require 'benchmark'
 # Require all ruby files
 Dir["#{File.dirname(__FILE__)}/app/*.rb"].each { |f| require f }
 include SuperMedian
+include QuickSort
 
 puts '=== SuperMedian Algorithm Analysis Script ==='
 puts ''
 
-# puts 'Simple:'
-# [100, 1000, 10000].each do |size|
-#   sum_times = 0
-#   repeats = 100
-#   repeats.times do
-#     unsorted_list = Array.new(size) { rand(1..1000) }
-#     sum_times += Benchmark.realtime do
-#       unsorted_list.sort
-#     end
-#   end
-#
-#   puts "#{size} entries: #{sum_times / repeats}"
-# end
+array_sizes = [100, 1000, 10000, 100000, 1000000]
+max_array_value = 10000
 
-puts "\nSuper Median:"
-RubyProf.start
-[10000].each do |size|
-  sum_times = 0
-  repeats = 100
-  repeats.times do
-    unsorted_list = Array.new(size) { rand(1..1000) }
-    sum_times += Benchmark.realtime do
-      super_median(unsorted_list)
-    end
-  end
-  # puts "#{size} entries: #{sum_times / repeats}"
+puts 'Ruby (C) Quick Sort:'
+array_sizes.each do |size|
+  unsorted_list = Array.new(size) { rand(1..max_array_value) }
+  total_time = Benchmark.realtime { unsorted_list.sort }
+  puts total_time
 end
 
-result = RubyProf.stop
-RubyProf::GraphPrinter.new(result).print(STDOUT)
+puts "\nRuby Quick Sort:"
+array_sizes.each do |size|
+  unsorted_list = Array.new(size) { rand(1..max_array_value) }
+  total_time = Benchmark.realtime do
+    sorted = QuickSort.quick_sort(unsorted_list, 0, size - 1)
+    sorted[size / 2]
+  end
+  puts total_time
+end
+
+puts "\nSuper Median:"
+array_sizes.each do |size|
+  unsorted_list = Array.new(size) { rand(1..max_array_value) }
+  total_time = Benchmark.realtime { SuperMedian.super_median(unsorted_list) }
+  puts total_time
+end
