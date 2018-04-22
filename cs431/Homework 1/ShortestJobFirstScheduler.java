@@ -11,6 +11,57 @@ public class ShortestJobFirstScheduler extends Scheduler
     public void tick()
     {
         // tip: you can call job.timeLeft();
+        Job job;
+
+        // If there were any jobs that used to be blocked, but no longer are,
+        // move them from the unblockedQueue to the end of the readyQueue.
+        for (job = cpu.unblockedQueue.first(); job != null; job = cpu.unblockedQueue.first())
+        {
+            job.enqueueEnd(cpu.readyQueue);
+        }
+
+        // If there are any new jobs being added to the processor, move them
+        // from the newJobQueue to the end of the readyQueue.
+        for (job = cpu.newJobQueue.first(); job != null; job = cpu.newJobQueue.first())
+        {
+            job.enqueueEnd(cpu.readyQueue);
+        }
+
+        // Check the job in the cpu (if any).  If it is done, move it to the done queue,
+        // and if it is blocked, move it to the blocked queue.
+        job = cpu.currentJob.first();
+        if (job != null)
+        {
+            if (job.done())
+            {
+                job.enqueueEnd(cpu.doneQueue);
+            }
+            else if (job.blocked())
+            {
+                job.enqueueEnd(cpu.blockedQueue);
+            }
+        }
+
+        // If the CPU is ready for a new job, start that job
+        if (cpu.currentJob.empty())
+        {
+            // Get job with lowest time
+            Job first_job = cpu.readyQueue.first();
+            Job lowest = first_job;
+
+            for (Job j = first_job; j != null; j = j.next())
+            {
+                if (j.timeLeft() < lowest.timeLeft())
+                {
+                    lowest = j;
+                }
+            }
+
+            if (lowest != null)
+            {
+                lowest.enqueueStart(cpu.currentJob);
+            }
+        }
     }
 
     public void testCase1(Processor cpu)
