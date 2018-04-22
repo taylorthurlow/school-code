@@ -10,7 +10,50 @@ public class RoundRobinScheduler extends Scheduler
     // This function does the scheduling work!
     public void tick()
     {
-        // TBD
+        Job job;
+
+        // If there were any jobs that used to be blocked, but no longer are,
+        // move them from the unblockedQueue to the end of the readyQueue.
+        for (job = cpu.unblockedQueue.first(); job != null; job = cpu.unblockedQueue.first())
+        {
+            job.enqueueEnd(cpu.readyQueue);
+        }
+
+        // If there are any new jobs being added to the processor, move them
+        // from the newJobQueue to the end of the readyQueue.
+        for (job = cpu.newJobQueue.first(); job != null; job = cpu.newJobQueue.first())
+        {
+            job.enqueueEnd(cpu.readyQueue);
+        }
+
+        // Check the job in the cpu (if any).  If it is done, move it to the done queue,
+        // and if it is blocked, move it to the blocked queue.
+        job = cpu.currentJob.first();
+        if (job != null)
+        {
+            if (job.done())
+            {
+                job.enqueueEnd(cpu.doneQueue);
+            }
+            else if (job.blocked())
+            {
+                job.enqueueEnd(cpu.blockedQueue);
+            }
+            else
+            {
+                job.enqueueEnd(cpu.readyQueue);
+            }
+        }
+
+        // If the CPU is ready for a new job, start that job
+        if (cpu.currentJob.empty())
+        {
+            job = cpu.readyQueue.first();
+            if (job != null)
+            {
+                job.enqueueStart(cpu.currentJob);
+            }
+        }
     }
 
     public void testCase1(Processor cpu)
