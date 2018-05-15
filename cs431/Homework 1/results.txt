@@ -1,0 +1,18 @@
+ScheduleSim!
+0: quit
+1: run a test case
+2: run homework
+Yes? 2
+Results for Taylor Thurlow
+First Come First Served Scheduler: Average turnaround: 213.7
+Shortest Job First Scheduler: Average turnaround: 122.5
+Round Robin Scheduler: Average turnaround: 209.5
+Shortest Remaining Time Next Scheduler: Average turnaround: 119.63333
+Priority Scheduler: Average turnaround: 168.43333
+Multiple Queue Scheduler: Average turnaround: 236.6
+0: quit
+1: run a test case
+2: run homework
+Yes? 0
+
+Process finished with exit code 0
