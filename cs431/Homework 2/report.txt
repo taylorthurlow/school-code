@@ -1,0 +1,43 @@
+RESULTS:
+
+How many seeks to generate?: 1000
+FCFS total time: 33743
+---
+SSF average delay: 320.172
+SSF maximum delay: 760
+SSF average score: 6067.2
+SSF maximum score: 20951.8
+---
+Elevator average delay: 196.794
+Elevator maximum delay: 547
+Elevator average score: 3144.2
+Elevator maximum score: 12793.3
+---
+Custom average delay: 201.634
+Custom maximum delay: 547
+Custom average score: 3266.4
+Custom maximum score: 12793.3
+
+Because my custom algorithm doesn't always edge out Elevator with 1000 seeks, here's 1,000,000:
+
+How many seeks to generate?: 1000000
+FCFS total time: 33686941
+---
+SSF average delay: 320.09365
+SSF maximum delay: 943
+SSF average score: 6056.4
+SSF maximum score: 28957.9
+---
+Elevator average delay: 202.12586
+Elevator maximum delay: 702
+Elevator average score: 3248.2
+Elevator maximum score: 18599.7
+---
+Custom average delay: 200.576218
+Custom maximum delay: 702
+Custom average score: 3224.3
+Custom maximum score: 18599.7
+
+
+
+My custom algorithm is a slightly modified version of Elevator. Whenever you get below 5 requests queued, and add 10 new requests, after adding the new requests, set the elevator direction to the direction which contains FEWER requests. Over 1 million seeks, this looks to be 0.74% faster. Results often fluctuate between Elevator and my custom algorithm when only using 1000 seeks.
