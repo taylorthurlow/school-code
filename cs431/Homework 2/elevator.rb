@@ -22,7 +22,10 @@ def elevator(master_list, start_position = 50)
       next
     end
 
-    selected_request = valid_requests.min { |sr| (sr.cylinder - head_position).abs }
+    selected_request = valid_requests.min do |a, b|
+      (a.cylinder - head_position).abs <=> (b.cylinder - head_position).abs
+    end
+
     request_list.delete(selected_request)
     total_time_taken += (selected_request.cylinder - head_position).abs
     head_position = selected_request.cylinder
@@ -36,5 +39,5 @@ def elevator(master_list, start_position = 50)
     end
   end
 
-  return finished_requests
+  return finished_requests, total_time_taken
 end

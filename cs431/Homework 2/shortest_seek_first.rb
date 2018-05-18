@@ -10,7 +10,10 @@ def shortest_seek_first(master_list, start_position = 50)
   end
 
   until master_list.empty? && request_list.empty?
-    closest_request = request_list.min { |sr| (sr.cylinder - head_position).abs }
+    closest_request = request_list.min do |a, b|
+      (a.cylinder - head_position).abs <=> (b.cylinder - head_position).abs
+    end
+
     request_list.delete(closest_request)
     total_time_taken += (closest_request.cylinder - head_position).abs
     head_position = closest_request.cylinder
@@ -24,5 +27,5 @@ def shortest_seek_first(master_list, start_position = 50)
     end
   end
 
-  return finished_requests
+  return finished_requests, total_time_taken
 end

@@ -22,7 +22,10 @@ def custom(master_list, start_position = 50)
       next
     end
 
-    selected_request = valid_requests.min { |sr| (sr.cylinder - head_position).abs }
+    selected_request = valid_requests.min do |a, b|
+      (a.cylinder - head_position).abs <=> (b.cylinder - head_position).abs
+    end
+
     request_list.delete(selected_request)
     total_time_taken += (selected_request.cylinder - head_position).abs
     head_position = selected_request.cylinder
@@ -36,10 +39,10 @@ def custom(master_list, start_position = 50)
     end
 
     # set direction to whichever direction has fewer requests
-    requests_above = request_list.count { |r| r.cylinder >= head_position }
-    requests_below = request_list.count { |r| r.cylinder <= head_position }
-    move_direction = requests_above < requests_below ? :up : :down
+    delay_above = request_list.select { |r| r.cylinder >= head_position }.sum { |sr| total_time_taken - sr.time_enter }
+    delay_below = request_list.select { |r| r.cylinder <= head_position }.sum { |sr| total_time_taken - sr.time_enter }
+    move_direction = delay_above > delay_below ? :up : :down
   end
 
-  return finished_requests
+  return finished_requests, total_time_taken
 end
