@@ -1,0 +1,93 @@
+#!/usr/bin/ruby
+
+require 'net/http'
+require 'json'
+
+def query_api(url)
+  uri = URI(url)
+  Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+    request = Net::HTTP::Get.new uri
+    response = http.request request
+    return JSON.parse(response.body)
+  end
+end
+
+# get flags
+
+# flags = gets
+# case flags.strip
+# when '--help', '-help'
+#   selection = :help
+# when '--synopsis', '-synopsis'
+#   selection = :synopsis
+# when '--bat', '-bat'
+#   selection = :bat
+# end
+
+# get input
+
+team = gets.upcase.strip
+teams_response = query_api('https://statsapi.web.nhl.com/api/v1/teams')
+selected_team_info = teams_response['teams'].find { |t| t['abbreviation'] == team }
+
+puts "Team: #{selected_team_info['name']}"
+
+puts ''
+
+print 'Last Game: '
+previous_game_response = query_api("https://statsapi.web.nhl.com/api/v1/teams/#{selected_team_info['id']}?expand=team.schedule.previous")
+if previous_game_response['teams'].first['previousGameSchedule']
+  previous_game_schedule = previous_game_response['teams'].first['previousGameSchedule']['dates'].first
+  date = previous_game_schedule['date']
+  is_home_team = previous_game_schedule['games'].first['teams']['home']['team']['id'] == selected_team_info['id']
+  opponent_name = if is_home_team
+                    previous_game_schedule['games'].first['teams']['away']['team']['name']
+                  else
+                    previous_game_schedule['games'].first['teams']['home']['team']['name']
+                  end
+  home_score = previous_game_schedule['games'].first['teams']['home']['score'].to_i
+  away_score = previous_game_schedule['games'].first['teams']['away']['score'].to_i
+  won_game = if is_home_team
+               home_score > away_score
+             else
+               away_score > home_score
+             end
+
+  higher_score = [home_score, away_score].max
+  lower_score = [home_score, away_score].min
+  puts "#{date} #{is_home_team ? 'vs.' : '@'} #{opponent_name}, #{won_game ? 'Won' : 'Lost'} #{higher_score}-#{lower_score}"
+else
+  puts 'Could not find previous game.'
+end
+
+puts ''
+
+print 'Next Game: '
+next_game_response = query_api("https://statsapi.web.nhl.com/api/v1/teams/#{selected_team_info['id']}?expand=team.schedule.next")
+if next_game_response['teams'].first['nextGameSchedule']
+  next_game_schedule = next_game_response['teams'].first['nextGameSchedule']['dates'].first
+  date = next_game_schedule['date']
+  is_home_team = next_game_schedule['games'].first['teams']['home']['team']['id'] == selected_team_info['id']
+  opponent_name = if is_home_team
+                    next_game_schedule['games'].first['teams']['away']['team']['name']
+                  else
+                    next_game_schedule['games'].first['teams']['home']['team']['name']
+                  end
+  puts "#{date} #{is_home_team ? 'vs.' : '@'} #{opponent_name}"
+else
+  puts 'Next game not yet scheduled.'
+end
+
+puts ''
+
+puts 'Current Roster:'
+roster_response = query_api("https://statsapi.web.nhl.com/api/v1/teams/#{selected_team_info['id']}?expand=team.roster")
+roster = roster_response['teams'].first['roster']['roster']
+roster.each do |player|
+  number = player['jerseyNumber'].nil? ? 'XX ' : player['jerseyNumber'].ljust(3)
+  abbreviation = player['position']['abbreviation'].ljust(3)
+  puts "##{number} #{abbreviation} #{player['person']['fullName']}"
+end
+
+puts ''
+
