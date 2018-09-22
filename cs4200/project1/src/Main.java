@@ -33,9 +33,9 @@ public class Main {
                     System.out.println("-----");
                     System.out.println();
                 }
-
-                System.out.println("Average generated: " + totalGenerated / 100);
             }
+
+            System.out.println("Average generated: " + totalGenerated / 100);
             in.close();
         } else if (selection == 2) {
             System.out.print("Input the puzzle using space delimiters: ");

@@ -16,14 +16,7 @@ public class Puzzle {
         currentState = new PuzzleState(values);
         currentState.setCostToReach(0);
 
-        Comparator<PuzzleState> stateComparator = new Comparator<>() {
-            @Override
-            public int compare(PuzzleState ps1, PuzzleState ps2) {
-                return ps1.costToReach - ps2.costToReach;
-            }
-        };
-
-        frontier = new PriorityQueue<>(stateComparator);
+        frontier = new PriorityQueue<>(Comparator.comparingInt(a -> a.costToReach));
         explored = new ArrayList<>();
 
         frontier.add(currentState);
@@ -63,16 +56,25 @@ public class Puzzle {
         ArrayList<PuzzleState> solution = null;
 
         while (!frontier.isEmpty()) {
+            // Find previous move direction to make sure we don't generate that state again
+//            boolean up, left, right, down;
+//            up = left = right = down = false;
+//            if (currentState.parent != null) {
+//                if ((currentState.getEmptyTileIndex() - currentState.parent.getEmptyTileIndex()) * -1 == -3) up = true;
+//                if ((currentState.getEmptyTileIndex() - currentState.parent.getEmptyTileIndex()) * -1 == -1) left = true;
+//                if ((currentState.getEmptyTileIndex() - currentState.parent.getEmptyTileIndex()) * -1 == +1) right = true;
+//                if ((currentState.getEmptyTileIndex() - currentState.parent.getEmptyTileIndex()) * -1 == +3) down = true;
+//            }
+
             // Find the lowest cost node currently in our frontier
             currentState = frontier.remove();
+            explored.add(currentState);
 
             // Check goal condition
             if (currentState.isGoal()) {
                 solution = currentState.pathToState();
                 break;
             }
-
-            explored.add(currentState);
 
             // Expand the state to other possible subsequent states
             // Can "move empty tile" up, left, right, or down depending on location
@@ -88,6 +90,17 @@ public class Puzzle {
         }
 
         System.out.println("Generated: " + generatedStates);
+
+        int largestCost = 0;
+        for (PuzzleState solutionState : solution) {
+            if (solutionState.costToReach > largestCost)
+                largestCost = solutionState.costToReach;
+        }
+
+        System.out.println("Solution cost: " + currentState.costToReach);
+        System.out.println("Largest cost in explored: " + largestCost);
+        System.out.println("Smallest cost in frontier: " + frontier.peek().costToReach);
+        if (largestCost > frontier.peek().costToReach) System.out.println("BROKEN!");
         return solution;
     }
 
@@ -96,8 +109,11 @@ public class Puzzle {
         tempValues[emptyLocation] = tempValues[emptyLocation + offset];
         tempValues[emptyLocation + offset] = 0;
         PuzzleState newState = new PuzzleState(tempValues, currentState);
-        newState.setCostToReach(currentState.costToReach + numberMisplacedTiles(newState.values));
-        generatedStates++;
+        newState.setCostToReach(currentState.pathToState().size() + 1 + numberMisplacedTiles(newState.values));
+
+        // Check goal condition
+        if (newState.isGoal())
+            System.out.println("FOUND SOLUTION AT STEPS: " + generatedStates);
 
         boolean continueExploring = true;
 
@@ -119,33 +135,8 @@ public class Puzzle {
 
         if (continueExploring) {
             frontier.add(newState);
+            generatedStates++;
         }
-
-        // ====
-
-//        if (explored.indexOf(newState) == -1) {     // not in explored set
-//
-//
-//            // See if we can find this state in the queue already
-//            Iterator value = frontier.iterator();
-//            PuzzleState duplicateState = null;
-//            while (value.hasNext()) {
-//                PuzzleState testState = (PuzzleState) value.next();
-//                if (testState.equals(newState))
-//                    duplicateState = testState;
-//            }
-//
-//            if (!frontier.contains(newState) || (duplicateState != null && newState.costToReach < duplicateState.costToReach)) { // not in explored set but IS in frontier set
-//                frontier.add(newState);
-//            } else {                                // not in explored set but IS in frontier set
-//                PuzzleState actualState = frontier.get(frontier.indexOf(newState));
-//                if ((newState.costToReach - numberMisplacedTiles(newState.values)) <
-//                        (actualState.costToReach - numberMisplacedTiles(actualState.values))) {
-//                    actualState.parent = newState.parent;
-//                    actualState.costToReach = newState.costToReach;
-//                }
-//            }
-//        }
     }
 
     private static int numberMisplacedTiles(int[] puzzle) {
