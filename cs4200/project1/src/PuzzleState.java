@@ -70,7 +70,7 @@ public class PuzzleState {
     public void print(PuzzleState compare) {
         for (int i = 0; i < 9; i++) {
             if (compare != null && values[i] != compare.values[i])
-                System.out.print((char) 27 + "[33m");
+                System.out.print((char) 27 + "[35m");
 
             if (values[i] != 0)
                 System.out.print(values[i] + " ");
@@ -81,7 +81,7 @@ public class PuzzleState {
                 System.out.println();
 
             if (compare != null && values[i] != compare.values[i])
-                System.out.print((char) 27 + "[37m");
+                System.out.print((char) 27 + "[0m");
         }
     }
 

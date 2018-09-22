@@ -11,6 +11,10 @@ public class Puzzle {
         this(generateRandomPuzzle());
     }
 
+    public Puzzle(Puzzle copyPuzzle) {
+        this(copyPuzzle.values);
+    }
+
     public Puzzle(int[] values) {
         this.values = values;
         currentState = new PuzzleState(values);
@@ -23,15 +27,19 @@ public class Puzzle {
     }
 
     private static int[] generateRandomPuzzle() {
-        int[] list = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        int[] list;
+        do {
+            list = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
-        Random rand = new Random();
-        for (int i = 0; i < list.length; i++) {
-            int randomPosition = rand.nextInt(list.length);
-            int temp = list[i];
-            list[i] = list[randomPosition];
-            list[randomPosition] = temp;
-        }
+            Random rand = new Random();
+            for (int i = 0; i < list.length; i++) {
+                int randomPosition = rand.nextInt(list.length);
+                int temp = list[i];
+                list[i] = list[randomPosition];
+                list[randomPosition] = temp;
+            }
+        } while (!checkSolvable(list));
+
 
         return list;
     }
@@ -48,24 +56,10 @@ public class Puzzle {
         return inversions % 2 == 0;
     }
 
-    public ArrayList<PuzzleState> solveH1() {
-        System.out.println("Solving puzzle with Heuristic 1:");
-        System.out.println();
-        currentState.print();
-
+    public ArrayList<PuzzleState> solve(boolean useManhattan) {
         ArrayList<PuzzleState> solution = null;
 
         while (!frontier.isEmpty()) {
-            // Find previous move direction to make sure we don't generate that state again
-//            boolean up, left, right, down;
-//            up = left = right = down = false;
-//            if (currentState.parent != null) {
-//                if ((currentState.getEmptyTileIndex() - currentState.parent.getEmptyTileIndex()) * -1 == -3) up = true;
-//                if ((currentState.getEmptyTileIndex() - currentState.parent.getEmptyTileIndex()) * -1 == -1) left = true;
-//                if ((currentState.getEmptyTileIndex() - currentState.parent.getEmptyTileIndex()) * -1 == +1) right = true;
-//                if ((currentState.getEmptyTileIndex() - currentState.parent.getEmptyTileIndex()) * -1 == +3) down = true;
-//            }
-
             // Find the lowest cost node currently in our frontier
             currentState = frontier.remove();
             explored.add(currentState);
@@ -83,13 +77,11 @@ public class Puzzle {
             int col = emptyLocation % 3;
 
             // Check each adjacent tile
-            if (row > 0) exploreState(-3, emptyLocation); // up
-            if (row < 2) exploreState(+3, emptyLocation); // down
-            if (col > 0) exploreState(-1, emptyLocation); // left
-            if (col < 2) exploreState(+1, emptyLocation); // right
+            if (row > 0) exploreState(-3, emptyLocation, useManhattan); // up
+            if (row < 2) exploreState(+3, emptyLocation, useManhattan); // down
+            if (col > 0) exploreState(-1, emptyLocation, useManhattan); // left
+            if (col < 2) exploreState(+1, emptyLocation, useManhattan); // right
         }
-
-        System.out.println("Generated: " + generatedStates);
 
         int largestCost = 0;
         for (PuzzleState solutionState : solution) {
@@ -97,23 +89,18 @@ public class Puzzle {
                 largestCost = solutionState.costToReach;
         }
 
-        System.out.println("Solution cost: " + currentState.costToReach);
-        System.out.println("Largest cost in explored: " + largestCost);
-        System.out.println("Smallest cost in frontier: " + frontier.peek().costToReach);
-        if (largestCost > frontier.peek().costToReach) System.out.println("BROKEN!");
         return solution;
     }
 
-    private void exploreState(int offset, int emptyLocation) {
+    private void exploreState(int offset, int emptyLocation, boolean useManhattan) {
         int[] tempValues = currentState.values.clone();
         tempValues[emptyLocation] = tempValues[emptyLocation + offset];
         tempValues[emptyLocation + offset] = 0;
         PuzzleState newState = new PuzzleState(tempValues, currentState);
-        newState.setCostToReach(currentState.pathToState().size() + 1 + numberMisplacedTiles(newState.values));
-
-        // Check goal condition
-        if (newState.isGoal())
-            System.out.println("FOUND SOLUTION AT STEPS: " + generatedStates);
+        if (useManhattan)
+            newState.setCostToReach(currentState.pathToState().size() + 1 + manhattanDistance(newState.values));
+        else
+            newState.setCostToReach(currentState.pathToState().size() + 1 + numberMisplacedTiles(newState.values));
 
         boolean continueExploring = true;
 
