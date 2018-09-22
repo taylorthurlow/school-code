@@ -1,5 +1,3 @@
-package edu.tthurlow;
-
 import java.util.ArrayList;
 
 public class PuzzleState {
@@ -66,11 +64,34 @@ public class PuzzleState {
     }
 
     public void print() {
+        this.print(null);
+    }
+
+    public void print(PuzzleState compare) {
         for (int i = 0; i < 9; i++) {
-            System.out.print(values[i] + " ");
+            if (compare != null && values[i] != compare.values[i])
+                System.out.print((char) 27 + "[33m");
+
+            if (values[i] != 0)
+                System.out.print(values[i] + " ");
+            else
+                System.out.print("  ");
+
             if (i == 2 || i == 5 || i == 8)
                 System.out.println();
+
+            if (compare != null && values[i] != compare.values[i])
+                System.out.print((char) 27 + "[37m");
         }
+    }
+
+    public static int[] parseInputPuzzle(String raw) {
+        String[] splits = raw.split(" ");
+        int[] values = new int[splits.length];
+        for (int i = 0; i < splits.length; i++)
+            values[i] = Integer.parseInt(splits[i]);
+
+        return values;
     }
 
     public int getCostToReach() {
