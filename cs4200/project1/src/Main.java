@@ -67,28 +67,27 @@ public class Main {
                 System.out.println("The puzzle you entered is not solvable.");
             }
         } else if (selection == 3) {
-            // Generate random puzzles
             int puzzleCount = 2000;
-            System.out.println("Generating " + puzzleCount + " puzzles...");
-            Puzzle[] puzzles = new Puzzle[puzzleCount];
-            for (int i = 0; i < puzzleCount; i++)
-                puzzles[i] = new Puzzle();
-
-            System.out.println("Solving puzzles.");
-            System.out.println("DEPTH, H1 COST, H1 RUNTIME (ms), H2 COST, H2 RUNTIME (ms)");
+            System.out.println("DEPTH, H1 COST, H1 RUNTIME (ns), H2 COST, H2 RUNTIME (ns)");
             System.out.println();
-            for (Puzzle puzzleH1 : puzzles) {
+            for (int i = 0; i < puzzleCount; i++) {
+                Puzzle puzzleH1 = new Puzzle();
                 Puzzle puzzleH2 = new Puzzle(puzzleH1); // Duplicate puzzle for Manhattan
 
                 long H1startTime = System.nanoTime();
                 ArrayList<PuzzleState> solutionH1 = puzzleH1.solve(false);
                 long H1endTime = System.nanoTime();
-                int H1totalTime = (int) (H1endTime - H1startTime) / 1000000;
+                long H1totalTime = H1endTime - H1startTime;
+
+                if (solutionH1 == null) { // Solution was deeper than 24, skip
+                    i--; // Decrement our loop so we don't count this in our total puzzle count
+                    continue;
+                }
 
                 long H2startTime = System.nanoTime();
                 ArrayList<PuzzleState> solutionH2 = puzzleH2.solve(true);
                 long H2endTime = System.nanoTime();
-                int H2totalTime = (int) (H2endTime - H2startTime) / 1000000;
+                long H2totalTime = H2endTime - H2startTime;
 
                 System.out.println((solutionH1.size() - 1) + ", "
                         + puzzleH1.generatedStates + ", " + H1totalTime + ", "

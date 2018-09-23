@@ -64,6 +64,12 @@ public class Puzzle {
             currentState = frontier.remove();
             explored.add(currentState);
 
+            // Cancel the entire thing if we've exceeded depth 22
+            if (currentState.pathToState().size() - 1 > 22) {
+                return null;
+            }
+
+
             // Check goal condition
             if (currentState.isGoal()) {
                 solution = currentState.pathToState();
