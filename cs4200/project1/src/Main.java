@@ -73,6 +73,8 @@ public class Main {
             for (int i = 0; i < puzzleCount; i++) {
                 Puzzle puzzleH1 = new Puzzle();
                 Puzzle puzzleH2 = new Puzzle(puzzleH1); // Duplicate puzzle for Manhattan
+                puzzleH1.allowLargeSolutions = false;
+                puzzleH2.allowLargeSolutions = false;
 
                 long H1startTime = System.nanoTime();
                 ArrayList<PuzzleState> solutionH1 = puzzleH1.solve(false);

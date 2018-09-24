@@ -3,6 +3,7 @@ import java.util.*;
 public class Puzzle {
     int[] values;
     int generatedStates = 1;
+    boolean allowLargeSolutions = true;
     PuzzleState currentState;
     PriorityQueue<PuzzleState> frontier;
     ArrayList<PuzzleState> explored;
@@ -65,7 +66,7 @@ public class Puzzle {
             explored.add(currentState);
 
             // Cancel the entire thing if we've exceeded depth 22
-            if (currentState.pathToState().size() - 1 > 22) {
+            if (!allowLargeSolutions && currentState.pathToState().size() - 1 > 22) {
                 return null;
             }
 

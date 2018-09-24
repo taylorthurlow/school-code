@@ -15,8 +15,8 @@
       <file leaf-file-name="PuzzleState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PuzzleState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+            <state relative-caret-position="270">
+              <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
               <folding>
                 <element signature="e#1531#1532#0" expanded="true" />
                 <element signature="e#1563#1564#0" expanded="true" />
@@ -25,26 +25,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Puzzle.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Puzzle.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Puzzle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="694">
-              <caret line="97" column="24" lean-forward="true" selection-start-line="97" selection-start-column="24" selection-end-line="97" selection-end-column="24" />
+            <state relative-caret-position="320">
+              <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
               <folding>
                 <element signature="e#219#220#0" expanded="true" />
                 <element signature="e#263#264#0" expanded="true" />
-                <element signature="e#307#308#0" expanded="true" />
-                <element signature="e#346#347#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="937">
-              <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
+            <state relative-caret-position="651">
+              <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,12 +84,12 @@
         <option value="$PROJECT_DIR$/src/depth6.txt" />
         <option value="$PROJECT_DIR$/src/depth8.txt" />
         <option value="$PROJECT_DIR$/src/PuzzleState.java" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/Puzzle.java" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="22" />
     <option name="width" value="2560" />
     <option name="height" value="1418" />
@@ -101,8 +99,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -175,15 +173,16 @@
     </recent_temporary>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="2560" height="1418" extended-state="0" />
+    <frame x="0" y="22" width="2560" height="1418" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09726562" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.23055555" />
       <window_info anchor="bottom" id="TODO" order="4" />
       <window_info anchor="bottom" id="Messages" order="5" weight="0.24776785" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
-      <window_info active="true" anchor="right" id="Run" order="5" visible="true" weight="0.3996094" />
+      <window_info active="true" anchor="right" id="Run" order="5" visible="true" weight="0.37695312" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Debug" order="4" weight="0.3371094" />
@@ -351,8 +350,6 @@
           <folding>
             <element signature="e#219#220#0" expanded="true" />
             <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -406,8 +403,6 @@
           <folding>
             <element signature="e#219#220#0" expanded="true" />
             <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -436,8 +431,6 @@
           <folding>
             <element signature="e#219#220#0" expanded="true" />
             <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -511,8 +504,6 @@
           <folding>
             <element signature="e#219#220#0" expanded="true" />
             <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -545,8 +536,6 @@
           <folding>
             <element signature="e#219#220#0" expanded="true" />
             <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -579,8 +568,6 @@
           <folding>
             <element signature="e#219#220#0" expanded="true" />
             <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -609,8 +596,6 @@
           <folding>
             <element signature="e#219#220#0" expanded="true" />
             <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -677,10 +662,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Puzzle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+          <folding>
+            <element signature="e#219#220#0" expanded="true" />
+            <element signature="e#263#264#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/PuzzleState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+        <state relative-caret-position="270">
+          <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
           <folding>
             <element signature="e#1531#1532#0" expanded="true" />
             <element signature="e#1563#1564#0" expanded="true" />
@@ -690,23 +686,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="937">
-          <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
+        <state relative-caret-position="651">
+          <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Puzzle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="694">
-          <caret line="97" column="24" lean-forward="true" selection-start-line="97" selection-start-column="24" selection-end-line="97" selection-end-column="24" />
-          <folding>
-            <element signature="e#219#220#0" expanded="true" />
-            <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
