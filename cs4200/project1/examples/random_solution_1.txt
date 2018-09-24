@@ -1,0 +1,104 @@
+== A* Analysis of the 8-Puzzle ==
+1: Generate a random puzzle and solve it
+2: Provide a specific puzzle configuration
+3: Perform a series of tests
+1
+Generating a random solvable puzzle...
+Solving the puzzle with h1 (Hamming)...
+Solution found with depth 21.
+Generated 10518 total states.
+
+Solving the puzzle with h2 (Manhattan)...
+Solution found with depth 21.
+Generated 3595 total states.
+
+4   1
+6 7 3
+8 2 5
+
+4 7 1
+6   3
+8 2 5
+
+4 7 1
+6 3
+8 2 5
+
+4 7
+6 3 1
+8 2 5
+
+4   7
+6 3 1
+8 2 5
+
+4 3 7
+6   1
+8 2 5
+
+4 3 7
+6 2 1
+8   5
+
+4 3 7
+6 2 1
+  8 5
+
+4 3 7
+  2 1
+6 8 5
+
+  3 7
+4 2 1
+6 8 5
+
+3   7
+4 2 1
+6 8 5
+
+3 2 7
+4   1
+6 8 5
+
+3 2 7
+4 1
+6 8 5
+
+3 2
+4 1 7
+6 8 5
+
+3   2
+4 1 7
+6 8 5
+
+3 1 2
+4   7
+6 8 5
+
+3 1 2
+4 7
+6 8 5
+
+3 1 2
+4 7 5
+6 8
+
+3 1 2
+4 7 5
+6   8
+
+3 1 2
+4   5
+6 7 8
+
+3 1 2
+  4 5
+6 7 8
+
+  1 2
+3 4 5
+6 7 8
+
+
+Process finished with exit code 0
