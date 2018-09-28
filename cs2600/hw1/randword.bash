@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat /usr/share/dict/words | head -n $(($(od -N 4 -t uL -An /dev/urandom | tr -d " ") % $(cat /usr/share/dict/words | wc -l))) | tail -n 1
+cat /usr/share/dict/words | grep -v "'" | head -n $(($(od -N 4 -t uL -An /dev/urandom | tr -d " ") % $(cat /usr/share/dict/words | wc -l))) | tail -n 1
 
 # Pipes the dictionary into head/tail to get a single entry. The entry is selected
 # using /dev/urandom because $RANDOM does not provide suitably large numbers for random
