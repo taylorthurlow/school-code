@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Board {
-    private int boardSize;
+    public int boardSize;
     public int[] positions;
 
     public Board(int boardSize) {
@@ -15,12 +15,22 @@ public class Board {
     }
 
     public Board(Board copyBoard) {
-        positions = copyBoard.positions;
+        positions = copyBoard.positions.clone();
     }
 
     public void print() {
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+        print(positions);
+    }
+
+    public int attackingQueenPairs() {
+        return attackingQueenPairs(positions);
+    }
+
+    // STATIC METHODS
+
+    public static void print(int[] positions) {
+        for (int i = 0; i < positions.length; i++) {
+            for (int j = 0; j < positions.length; j++) {
                 if (positions[j] == i)
                     System.out.print("[Q]");
                 else
@@ -28,20 +38,11 @@ public class Board {
             }
             System.out.println();
         }
+        System.out.println("Attacking pairs: " + attackingQueenPairs(positions));
+        System.out.println();
     }
 
-    // STATIC METHODS
-
-    private static int[] randomPositions(int boardSize) {
-        int[] positions = new int[boardSize];
-        Random random = new Random();
-        for (int i = 0; i < boardSize; i++)
-            positions[i] = random.nextInt(boardSize);
-
-        return positions;
-    }
-
-    public int attackingQueenPairs() {
+    public static int attackingQueenPairs(int[] positions) {
         int attackingPairs = 0;
 
         for (int i = 0; i < positions.length - 1; i++) {
@@ -62,5 +63,14 @@ public class Board {
         }
 
         return attackingPairs;
+    }
+
+    private static int[] randomPositions(int boardSize) {
+        int[] positions = new int[boardSize];
+        Random random = new Random();
+        for (int i = 0; i < boardSize; i++)
+            positions[i] = random.nextInt(boardSize);
+
+        return positions;
     }
 }
