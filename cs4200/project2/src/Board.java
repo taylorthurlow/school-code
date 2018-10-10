@@ -26,6 +26,10 @@ public class Board {
         return attackingQueenPairs(positions);
     }
 
+    public int nonAttackingQueenPairs() {
+        return nonAttackingQueenPairs(positions);
+    }
+
     // STATIC METHODS
 
     public static void print(int[] positions) {
@@ -65,7 +69,15 @@ public class Board {
         return attackingPairs;
     }
 
-    private static int[] randomPositions(int boardSize) {
+    public static int nonAttackingQueenPairs(int[] positions) {
+        return totalQueenPairs(positions.length) - attackingQueenPairs(positions);
+    }
+
+    public static int totalQueenPairs(int boardSize) {
+        return (boardSize * (boardSize - 1)) / 2;
+    }
+
+    public static int[] randomPositions(int boardSize) {
         int[] positions = new int[boardSize];
         Random random = new Random();
         for (int i = 0; i < boardSize; i++)

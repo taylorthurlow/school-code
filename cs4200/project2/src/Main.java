@@ -11,44 +11,61 @@ public class Main {
         int selection = sc.nextInt();
 
         if (selection == 1) {
+            long startTime, endTime;
+            System.out.print("Generating random puzzle...");
             Board board = new Board(21);
-            board.print();
-
-            System.out.print("Attempting solution...");
-            SimulatedAnnealing sa = new SimulatedAnnealing(board);
             System.out.println("done.");
 
+            System.out.println();
+
+            System.out.print("Attempting annealing solution...");
+            startTime = System.nanoTime();
+            SimulatedAnnealing sa = new SimulatedAnnealing(board);
+            endTime = System.nanoTime();
+            System.out.println("done.");
             System.out.println("Valid Solution: " + sa.validSolution);
-            System.out.println("Search Cost: " + sa.cost);
-
-            if (sa.validSolution)
-                Board.print(sa.solutionPositions);
-        } else if (selection == 2) {
-            int successes = 0;
-            int failures = 0;
-            long cumulativeTime = 0;
-
-            for (int i = 0; i < 500; i++) {
-                long startTime = System.nanoTime();
-                SimulatedAnnealing sa = new SimulatedAnnealing(new Board(21));
-                long endTime = System.nanoTime();
-                long totalTime = endTime - startTime;
-                cumulativeTime += totalTime;
-
-                if (sa.validSolution) {
-                    System.out.println("SUCCESS  " + totalTime);
-                    successes++;
-                } else {
-                    System.out.println("FAILURE  " + totalTime);
-                    failures++;
-                }
+            if (sa.validSolution) {
+                System.out.println("Search Cost: " + sa.cost);
+                System.out.println("Time: " + (endTime - startTime) / 500D / 1000000D + " ms");
+//                Board.print(sa.solutionPositions);
             }
 
             System.out.println();
-            System.out.println("Total successes: " + successes);
-            System.out.println("Total failures: " + failures);
-            System.out.println("Success rate: " + ((double) successes / (successes + failures)) * 100 + "%");
-            System.out.println("Average time: " + cumulativeTime / 500D / 1000000D + " ms");
+
+            System.out.print("Attempting genetics solution...");
+            startTime = System.nanoTime();
+            Genetic g = new Genetic(board);
+            endTime = System.nanoTime();
+            System.out.println("done.");
+            System.out.println("Valid Solution: " + g.validSolution);
+            if (g.validSolution) {
+                System.out.println("Search Cost: " + g.cost);
+                System.out.println("Time: " + (endTime - startTime) / 500D / 1000000D + " ms");
+//                Board.print(g.mostFit);
+            }
+
+        } else if (selection == 2) {
+            System.out.println("SA SOLUTION FOUND, SA RUNTIME (ns), SA COST, G SOLUTION FOUND, G RUNTIME (ns), G COST");
+            for (int i = 0; i < 500; i++) {
+                Board board = new Board(21);
+
+                // Simulated Annealing
+                long saStart = System.nanoTime();
+                SimulatedAnnealing sa = new SimulatedAnnealing(board);
+                long saEnd = System.nanoTime();
+
+                // Genetics
+                long gStart = System.nanoTime();
+                Genetic g = new Genetic(board);
+                long gEnd = System.nanoTime();
+
+                System.out.println((sa.validSolution ? "Yes" : "No") + ", "
+                        + (saEnd - saStart) + ", "
+                        + sa.cost + ", "
+                        + (g.validSolution ? "Yes" : "No") + ", "
+                        + (gEnd - gStart) + ", " + g.cost
+                );
+            }
         } else {
             System.out.println("Invalid selection.");
         }
