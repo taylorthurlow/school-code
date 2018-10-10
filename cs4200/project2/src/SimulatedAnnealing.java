@@ -8,11 +8,11 @@ public class SimulatedAnnealing {
 
     public SimulatedAnnealing(Board board) {
         ArrayList<Board> boardList = new ArrayList<>();
-        double temperature = 100;
-        double threshold = 1.0E-200;
+        double temperature = Math.pow(board.boardSize, 2);
+        double maxSteps = 100_000;
         int[] childPositions;
 
-        while (temperature > threshold) {
+        while (maxSteps >= cost) {
             childPositions = board.positions.clone();
             Random rand = new Random();
             int col = rand.nextInt(board.boardSize);
@@ -30,8 +30,8 @@ public class SimulatedAnnealing {
 
                 int scoreDelta = board.attackingQueenPairs() - child.attackingQueenPairs();
                 if (scoreDelta > 0) {
-                    board = child;
                     boardList.clear();
+                    board = child;
 
                     if (board.attackingQueenPairs() == 0) {
                         validSolution = true;
@@ -39,12 +39,14 @@ public class SimulatedAnnealing {
                         break;
                     }
                 } else if (Math.exp(scoreDelta / temperature) > rand.nextDouble()) {
-                    board = child;
                     boardList.clear();
+                    board = child;
                 }
             }
 
-            temperature *= 0.995;
+            double newTemp = temperature * 0.95;
+            temperature = (newTemp > 0.01 ? newTemp : 0.01);
+//            temperature *= 0.95;
         }
     }
 }
