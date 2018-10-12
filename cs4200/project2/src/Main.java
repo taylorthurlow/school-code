@@ -27,7 +27,7 @@ public class Main {
             if (sa.validSolution) {
                 System.out.println("Search Cost: " + sa.cost);
                 System.out.println("Time: " + (endTime - startTime) / 500D / 1000000D + " ms");
-//                Board.print(sa.solutionPositions);
+                Board.print(sa.solutionPositions);
             }
 
             System.out.println();
@@ -41,7 +41,7 @@ public class Main {
             if (g.validSolution) {
                 System.out.println("Search Cost: " + g.cost);
                 System.out.println("Time: " + (endTime - startTime) / 500D / 1000000D + " ms");
-//                Board.print(g.mostFit);
+                Board.print(g.mostFit);
             }
 
         } else if (selection == 2) {
