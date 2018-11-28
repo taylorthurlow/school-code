@@ -12,18 +12,22 @@ public class Board {
     this.board = Arrays.copyOf(copyBoard.board, copyBoard.board.length);
   }
 
+  public void addMove(int marker, int row, int col) {
+    board[row - 1][col - 1] = marker;
+  }
+
   public void print() {
     System.out.print("  ");
-    for(int i = 1; i <= BOARD_SIZE; i++)
+    for (int i = 1; i <= BOARD_SIZE; i++)
       System.out.print(i + " ");
 
     System.out.println();
 
     int letter = 65; // ascii for A
-    for(int i = 0; i < BOARD_SIZE; i++) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
       System.out.print((char) letter + " ");
 
-      for(int j = 0; j < BOARD_SIZE; j++) {
+      for (int j = 0; j < BOARD_SIZE; j++) {
         char marker = intToSymbol(board[i][j]);
         System.out.print(marker + " ");
       }
