@@ -2,51 +2,11 @@ import java.io.*;
 import java.util.*;
 
 public class Board {
-  private int BOARD_SIZE = 8;
   private ArrayList<Move> moves = new ArrayList<>();
+  State state = new State();
 
   public void addMove(Move move) {
     moves.add(move);
-  }
-
-  public int[][] board() {
-    int[][] result = new int[BOARD_SIZE][BOARD_SIZE];
-
-    for (Move move : moves)
-      result[move.row - 1][move.col - 1] = move.marker;
-
-    return result;
-  }
-
-  public boolean win() {
-    int[][] board = board();
-    boolean win = false;
-
-    for (int row = 0; row < BOARD_SIZE; row++) {
-      for (int col = 0; col < BOARD_SIZE; col++) {
-        int current = board[row][col];
-
-        if (current != 0) {
-          // Vertical win
-          if (row <= BOARD_SIZE - 4 &&
-              board[row + 1][col] == current &&
-              board[row + 2][col] == current &&
-              board[row + 3][col] == current) {
-            win = true;
-          }
-
-          // Horizontal win
-          if (col <= BOARD_SIZE - 4 &&
-              board[row][col + 1] == current &&
-              board[row][col + 2] == current &&
-              board[row][col + 3] == current) {
-            win = true;
-          }
-        }
-      }
-    }
-
-    return win;
   }
 
   public void print() {
@@ -58,17 +18,17 @@ public class Board {
     StringBuilder result = new StringBuilder();
     result.append("  ");
 
-    for (int i = 1; i <= BOARD_SIZE; i++)
+    for (int i = 1; i <= 8; i++)
       result.append(i + " ");
 
     result.append("\n");
 
     int letter = 65; // ascii for A
-    for (int i = 0; i < BOARD_SIZE; i++) {
+    for (int i = 0; i < 8; i++) {
       result.append((char) letter + " ");
 
-      for (int j = 0; j < BOARD_SIZE; j++) {
-        char marker = intToSymbol(board()[i][j]);
+      for (int j = 0; j < 8; j++) {
+        char marker = intToSymbol(state.board[i][j]);
         result.append(marker + " ");
       }
 
