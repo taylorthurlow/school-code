@@ -1,5 +1,5 @@
 public class Move {
-  int marker;
+  private int marker;
   int row;
   int col;
 

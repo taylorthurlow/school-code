@@ -1,17 +1,25 @@
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Board {
   private ArrayList<Move> moves = new ArrayList<>();
-  State state = new State();
+  public State state = new State();
+  private boolean playerFirst;
+
+  public Board(boolean playerFirst) {
+    this.playerFirst = playerFirst;
+  }
 
   public void addMove(Move move) {
     moves.add(move);
   }
 
   public void print() {
-    String toPrint = sideBySideString(boardString(), moveList(true));
-    System.out.println(toPrint);
+    System.out.println(toString());
+  }
+
+  @Override
+  public String toString() {
+    return sideBySideString(boardString(), moveList(playerFirst));
   }
 
   private String boardString() {
@@ -35,6 +43,8 @@ public class Board {
       result.append("\n");
       letter++;
     }
+
+    result.append("\n");
 
     return result.toString();
   }
@@ -60,7 +70,7 @@ public class Board {
 
   private static char intToSymbol(int input) {
     char result;
-    switch(input) {
+    switch (input) {
       case 0:
         result = '-';
         break;
@@ -96,11 +106,16 @@ public class Board {
 
     // loop through parts and build new string
     StringBuilder b = new StringBuilder();
-    for (int i = 0; i < s1a.length; i++) {
-      b.append(s1a[i]); // string 1
+    int largerLength = Math.max(s1a.length, s2a.length);
+    for (int i = 0; i < largerLength; i++) {
+      if (i < s1a.length) // string 1
+        b.append(s1a[i]);
 
-      if (i < s2a.length) // string 2 with padding
+      if (i < s2a.length) { // string 2 with padding
+        if (i >= s1a.length)
+          b.append("                  ");
         b.append(between).append(s2a[i]);
+      }
 
       b.append(returnPattern); // newline
     }
